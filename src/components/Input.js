@@ -2,22 +2,28 @@ import React from "react";
 import "./style/Input.css";
 class Input extends React.Component {
   state = {
-    todo: "Example",
+    todo: "",
     todoList: [],
     count: 0,
   };
   handleInputChange = (e) => {
-    const newTodo = e.target.value;
-    this.setState({
-      todo: newTodo,
-    });
+    if (e.target.value !== undefined) {
+      this.setState({
+        todo: e.target.value,
+      });
+    }
+    console.log(e.target.value);
   };
   handleSubmit = (e) => {
     e.preventDefault();
-    this.state.todoList.push(this.state.todo); //push new todo into todoList
-    this.setState({
-      count: this.state.count + 1,
-    });
+    console.log(e.target.value);
+    if (this.state.todo != undefined) {
+      this.setState({
+        todo: e.target.value,
+        count: this.state.count + 1,
+        todoList: [...this.state.todoList, this.state.todo],
+      });
+    }
     console.log(this.state.count);
     console.log(this.state.todoList);
   };
@@ -25,6 +31,7 @@ class Input extends React.Component {
     const completedStatus = e.target.value;
     console.log(completedStatus);
   };
+
   render() {
     return (
       <div className="form-field">
@@ -35,6 +42,7 @@ class Input extends React.Component {
               className="input-field"
               placeholder="What needs to be done?"
               onChange={this.handleInputChange}
+              value={this.state.todo}
             ></input>
           </div>
         </form>

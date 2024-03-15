@@ -8,3 +8,10 @@ p {
 .footer {
   margin-top: 65px;
 }
+.footer p a {
+  text-decoration: none;
+  color: #4d4d4d;
+}
+.footer p a:hover {
+  text-decoration: underline;
+}
