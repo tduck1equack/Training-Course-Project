@@ -8,24 +8,23 @@ class Input extends React.Component {
   };
   handleInputChange = (e) => {
     if (e.target.value !== undefined) {
+      console.log("Value on input field: ", e.target.value);
       this.setState({
         todo: e.target.value,
       });
     }
-    console.log(e.target.value);
   };
   handleSubmit = (e) => {
     e.preventDefault();
-    console.log(e.target.value);
-    if (this.state.todo != undefined) {
+    if (this.state.todo !== "") {
       this.setState({
-        todo: e.target.value,
+        todo: "",
         count: this.state.count + 1,
-        todoList: [...this.state.todoList, this.state.todo],
+        todoList: [this.state.todo, ...this.state.todoList],
       });
     }
-    console.log(this.state.count);
-    console.log(this.state.todoList);
+    console.log("State count: ", this.state.count);
+    console.log("State array: ", this.state.todoList);
   };
   handleCompletedChange = (e) => {
     const completedStatus = e.target.value;
