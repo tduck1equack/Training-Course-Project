@@ -3,8 +3,21 @@ import "./style/Input.css";
 class Input extends React.Component {
   state = {
     todo: "",
+    state: false,
     todoList: [],
     count: 0,
+    tab: "All",
+    tabOutput: "",
+  };
+  handleDebug = (e) => {
+    debugger;
+  };
+  viewTodoList = (e) => {
+    console.log(this.state.todoList);
+    this.setState({
+      todoList: this.state.todoList.filter((todo) => todo.status === false),
+    });
+    console.log(this.state.todoList);
   };
   handleInputChange = (e) => {
     if (e.target.value !== undefined) {
@@ -13,6 +26,7 @@ class Input extends React.Component {
         todo: e.target.value,
       });
     }
+    console.log(this.state.outputTab);
   };
   handleSubmit = (e) => {
     e.preventDefault();
@@ -20,17 +34,47 @@ class Input extends React.Component {
       this.setState({
         todo: "",
         count: this.state.count + 1,
-        todoList: [this.state.todo, ...this.state.todoList],
+        todoList: [
+          ...this.state.todoList,
+          { item: this.state.todo, status: false },
+        ],
       });
     }
+
     console.log("State count: ", this.state.count);
     console.log("State array: ", this.state.todoList);
+    console.log(this.state.outputTab);
+  };
+  handleTick = (e) => {
+    console.log(e.target.checked);
+    debugger;
+    this.setState({});
   };
   handleCompletedChange = (e) => {
-    const completedStatus = e.target.value;
-    console.log(completedStatus);
+    console.log(e.target.checked);
+    this.setState({
+      status: e.target.checked,
+    });
   };
 
+  showAll = (e) => {
+    this.setState({
+      tab: "All",
+    });
+    console.log(this.state.tab);
+    console.log(this.state.tabOutput);
+    console.log(this.state.todoList);
+  };
+  showActive = (e) => {
+    this.setState({
+      tab: "Active",
+    });
+  };
+  showCompleted = (e) => {
+    this.setState({
+      tab: "Completed",
+    });
+  };
   render() {
     return (
       <div className="form-field">
@@ -46,18 +90,91 @@ class Input extends React.Component {
           </div>
         </form>
         <div className="output-field">
-          {this.state.todoList.map((todo) => (
-            <ul className="todo-list">
-              <li key={todo}>
-                <input
-                  className="completed"
-                  type="checkbox"
-                  onChange={this.handleCompletedChange}
-                ></input>
-                <div className="todo-items">{todo}</div>
-              </li>
-            </ul>
-          ))}
+          {this.state.tab === "All"
+            ? this.state.todoList.map((todo) => (
+                <ul className="todo-list">
+                  <li key={todo.item} class="completed">
+                    <input
+                      className="checkbox"
+                      type="checkbox"
+                      onChange={(e) => {
+                        todo.status = e.target.checked;
+                      }}
+                      onClick={this.handleDebug}
+                      checked={todo.status}
+                    ></input>
+                    <div
+                      className="todo-items"
+                      style={
+                        todo.status === true
+                          ? { textDecoration: "line-through" }
+                          : {}
+                      }
+                    >
+                      {todo.item}
+                    </div>
+                  </li>
+                </ul>
+              ))
+            : this.state.tab === "Active"
+            ? this.state.todoList.map((todo) => {
+                if (todo.status === false) {
+                  return (
+                    <ul className="todo-list">
+                      <li key={todo.item} class="completed">
+                        <input
+                          className="checkbox"
+                          type="checkbox"
+                          onChange={(e) => {
+                            todo.status = e.target.checked;
+                          }}
+                          onClick={this.handleDebug}
+                          checked={todo.status}
+                        ></input>
+                        <div
+                          className="todo-items"
+                          style={
+                            todo.status === true
+                              ? { textDecoration: "line-through" }
+                              : {}
+                          }
+                        >
+                          {todo.item}
+                        </div>
+                      </li>
+                    </ul>
+                  );
+                }
+              })
+            : this.state.todoList.map((todo) => {
+                if (todo.status === true) {
+                  return (
+                    <ul className="todo-list">
+                      <li key={todo.item} class="completed">
+                        <input
+                          className="checkbox"
+                          type="checkbox"
+                          onChange={(e) => {
+                            todo.status = e.target.checked;
+                          }}
+                          onClick={this.handleDebug}
+                          checked={todo.status}
+                        ></input>
+                        <div
+                          className="todo-items"
+                          style={
+                            todo.status === true
+                              ? { textDecoration: "line-through" }
+                              : {}
+                          }
+                        >
+                          {todo.item}
+                        </div>
+                      </li>
+                    </ul>
+                  );
+                }
+              })}
           {this.state.count === 0 ? (
             ""
           ) : (
@@ -66,16 +183,18 @@ class Input extends React.Component {
               <div className="actions">
                 <ul>
                   <li>
-                    <button>All</button>
+                    <button onClick={this.showAll}>All</button>
                   </li>
                   <li>
-                    <button>Active</button>
+                    <button onClick={this.showActive}>Active</button>
                   </li>
                   <li>
-                    <button>Completed</button>
+                    <button onClick={this.showCompleted}>Completed</button>
                   </li>
                 </ul>
-                <button className="clear">Clear completed</button>
+                <button className="clear" onClick={this.viewTodoList}>
+                  Clear completed
+                </button>
               </div>
             </div>
           )}

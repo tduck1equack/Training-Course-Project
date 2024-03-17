@@ -28,13 +28,17 @@ ul {
   font-style: italic;
   border: 1px solid #e6e6e6;
 }
+.input-field:focus {
+  outline: none;
+  box-shadow: 0 2px 4px 0 rgba(206, 147, 146, 255);
+}
 .output-field .todo-list li {
   display: flex;
   align-items: center;
   border: 1px solid #e6e6e6;
 }
 
-.completed {
+.checkbox {
   width: 40px;
   height: 40px;
   border-radius: 50%;

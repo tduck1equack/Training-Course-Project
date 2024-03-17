@@ -1,0 +1,16 @@
+{this.state.todoList.map((todo) => (
+            <ul className="todo-list">
+              <li key={todo.item} class="completed">
+                <input
+                  className="checkbox"
+                  type="checkbox"
+                  onChange={(e) => {
+                    todo.status = e.target.checked;
+                  }}
+                  onClick={this.handleDebug}
+                  value={todo.status}
+                ></input>
+                <div className="todo-items">{todo.item}</div>
+              </li>
+            </ul>
+          ))}
