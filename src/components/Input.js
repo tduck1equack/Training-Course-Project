@@ -7,6 +7,7 @@ class Input extends React.Component {
     count: 0,
     tab: "All",
   };
+  //handleCountChange(): changing count number if a task is checked or unchecked
   handleCountChange = (e) => {
     if (e.target.checked === true) {
       this.setState({
@@ -18,12 +19,14 @@ class Input extends React.Component {
       });
     }
   };
+  //handleClearCompleted: filters completed tasks and removes from todoList
   handleClearCompleted = (e) => {
     this.setState({
       todoList: this.state.todoList.filter((todo) => todo.status === false),
     });
     console.log(this.state.todoList);
   };
+  //handleInputChange: enables Input and set todo to be Input value
   handleInputChange = (e) => {
     if (e.target.value !== undefined) {
       console.log("Value on input field: ", e.target.value);
@@ -32,6 +35,8 @@ class Input extends React.Component {
       });
     }
   };
+  //handleSubmit: Submit behavior: prevent page reloading, set Input to blank after submitting,
+  //              incrementing count and add task to todoList with default status as false
   handleSubmit = (e) => {
     e.preventDefault();
     if (this.state.todo !== "") {
@@ -44,18 +49,10 @@ class Input extends React.Component {
         ],
       });
     }
-
     console.log("State count: ", this.state.count);
     console.log("State array: ", this.state.todoList);
   };
-
-  handleCompletedChange = (e) => {
-    console.log(e.target.checked);
-    this.setState({
-      status: e.target.checked,
-    });
-  };
-
+  //showAll, showActive, showCompleted: set state 'tab' for conditional rendering
   showAll = (e) => {
     this.setState({
       tab: "All",
