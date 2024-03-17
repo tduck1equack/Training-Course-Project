@@ -9,10 +9,18 @@ class Input extends React.Component {
     tab: "All",
     tabOutput: "",
   };
-  handleDebug = (e) => {
-    debugger;
+  handleCountChange = (e) => {
+    if (e.target.checked === true) {
+      this.setState({
+        count: this.state.count - 1,
+      });
+    } else {
+      this.setState({
+        count: this.state.count + 1,
+      });
+    }
   };
-  viewTodoList = (e) => {
+  handleClearCompleted = (e) => {
     console.log(this.state.todoList);
     this.setState({
       todoList: this.state.todoList.filter((todo) => todo.status === false),
@@ -100,7 +108,7 @@ class Input extends React.Component {
                       onChange={(e) => {
                         todo.status = e.target.checked;
                       }}
-                      onClick={this.handleDebug}
+                      onClick={this.handleCountChange}
                       checked={todo.status}
                     ></input>
                     <div
@@ -128,7 +136,7 @@ class Input extends React.Component {
                           onChange={(e) => {
                             todo.status = e.target.checked;
                           }}
-                          onClick={this.handleDebug}
+                          onClick={this.handleCountChange}
                           checked={todo.status}
                         ></input>
                         <div
@@ -157,7 +165,7 @@ class Input extends React.Component {
                           onChange={(e) => {
                             todo.status = e.target.checked;
                           }}
-                          onClick={this.handleDebug}
+                          onClick={this.handleCountChange}
                           checked={todo.status}
                         ></input>
                         <div
@@ -175,7 +183,7 @@ class Input extends React.Component {
                   );
                 }
               })}
-          {this.state.count === 0 ? (
+          {this.state.todoList.length === 0 ? (
             ""
           ) : (
             <div className="menu-bar">
@@ -192,7 +200,7 @@ class Input extends React.Component {
                     <button onClick={this.showCompleted}>Completed</button>
                   </li>
                 </ul>
-                <button className="clear" onClick={this.viewTodoList}>
+                <button className="clear" onClick={this.handleClearCompleted}>
                   Clear completed
                 </button>
               </div>
