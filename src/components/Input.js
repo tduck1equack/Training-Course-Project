@@ -19,7 +19,6 @@ class Input extends React.Component {
     }
   };
   handleClearCompleted = (e) => {
-    console.log(this.state.todoList);
     this.setState({
       todoList: this.state.todoList.filter((todo) => todo.status === false),
     });
@@ -49,11 +48,7 @@ class Input extends React.Component {
     console.log("State count: ", this.state.count);
     console.log("State array: ", this.state.todoList);
   };
-  handleTick = (e) => {
-    console.log(e.target.checked);
-    debugger;
-    this.setState({});
-  };
+
   handleCompletedChange = (e) => {
     console.log(e.target.checked);
     this.setState({
@@ -66,7 +61,6 @@ class Input extends React.Component {
       tab: "All",
     });
     console.log(this.state.tab);
-    console.log(this.state.tabOutput);
     console.log(this.state.todoList);
   };
   showActive = (e) => {
