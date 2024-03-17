@@ -3,11 +3,9 @@ import "./style/Input.css";
 class Input extends React.Component {
   state = {
     todo: "",
-    state: false,
     todoList: [],
     count: 0,
     tab: "All",
-    tabOutput: "",
   };
   handleCountChange = (e) => {
     if (e.target.checked === true) {
@@ -34,7 +32,6 @@ class Input extends React.Component {
         todo: e.target.value,
       });
     }
-    console.log(this.state.outputTab);
   };
   handleSubmit = (e) => {
     e.preventDefault();
@@ -51,7 +48,6 @@ class Input extends React.Component {
 
     console.log("State count: ", this.state.count);
     console.log("State array: ", this.state.todoList);
-    console.log(this.state.outputTab);
   };
   handleTick = (e) => {
     console.log(e.target.checked);
