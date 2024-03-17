@@ -47,6 +47,9 @@ ul {
 .todo-items {
   font-size: 24px;
   padding-left: 17px;
+  width: 100%;
+  overflow: auto;
+  overflow-wrap: break-word;
 }
 .menu-bar {
   display: flex;
