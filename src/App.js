@@ -1,6 +1,6 @@
 import React from "react";
 import Header from "./components/Header";
-import Input from "./components/Input";
+import Main from "./components/Main";
 import Footer from "./components/Footer";
 import "./App.css";
 class App extends React.Component {
@@ -8,7 +8,7 @@ class App extends React.Component {
     return (
       <div className="margin-container">
         <Header />
-        <Input />
+        <Main />
         <Footer />
       </div>
     );

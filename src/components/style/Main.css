@@ -13,7 +13,6 @@ ul {
   background-color: #fff;
 }
 .input-wrapper {
-  display: flex;
   background-color: #fff;
 }
 
@@ -32,6 +31,11 @@ ul {
   outline: none;
   box-shadow: 0 2px 4px 0 rgba(206, 147, 146, 255);
 }
+
+.list-wrapper > li {
+  display: flex;
+}
+
 .output-field .todo-list li {
   display: flex;
   align-items: center;
