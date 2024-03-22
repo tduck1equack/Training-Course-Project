@@ -1,11 +1,8 @@
 import React from "react";
-import Item from "./input-component/Item";
 import Menu from "./input-component/Menu";
 import List from "./input-component/List";
 import Input from "./input-component/Input";
-
-import Test from "./input-component/Test";
-
+import ArrowDown from "./input-component/ArrowDown";
 import "./style/Main.css";
 class Main extends React.Component {
   state = {
@@ -65,11 +62,12 @@ class Main extends React.Component {
           onChangeHandler={this.handleInputChange}
           onSubmitHandler={this.handleSubmit}
         />
+        <ArrowDown />
+
         <List
           list={this.state.todoList}
           statusHandler={this.handleChangeStatus}
         />
-        <button onClick={this.viewState}>View</button>
         {this.state.count > 0 ? <Menu count={this.state.count} /> : ""}
       </div>
     );

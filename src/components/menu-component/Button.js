@@ -1,10 +1,10 @@
 import React from "react";
-
+import "../style/Button.css";
 export default class Button extends React.Component {
   constructor(props) {
     super(props);
   }
   render() {
-    return <button>{this.props.type}</button>;
+    return <button className={this.props.special}>{this.props.name}</button>;
   }
 }

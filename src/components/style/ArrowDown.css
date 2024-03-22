@@ -1,0 +1,12 @@
+.absolute-container {
+  position: relative;
+}
+
+.down-button {
+  position: absolute;
+  top: -43px;
+  left: 17px;
+}
+
+.icon {
+}

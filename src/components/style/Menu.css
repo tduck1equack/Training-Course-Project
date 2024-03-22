@@ -1,0 +1,16 @@
+.menu {
+  display: flex;
+  justify-content: space-between;
+  padding: 10px 15px;
+  border-top: 1px solid #ededed;
+}
+.menu .button-menu {
+  display: flex;
+  width: 70%;
+  justify-content: space-between;
+}
+.menu .button-menu .center-menu {
+  display: flex;
+  justify-content: space-between;
+  gap: 6%;
+}

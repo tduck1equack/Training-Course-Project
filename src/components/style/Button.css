@@ -1,0 +1,16 @@
+button {
+  background-color: #fff;
+  border: none;
+  padding: 3px 7px;
+  font-size: 15px;
+  border-radius: 3px;
+}
+button:hover {
+  outline: 1px solid #ce4646;
+  cursor: pointer;
+}
+.secondary,
+.secondary:hover {
+  border: none;
+  text-decoration: underline;
+}

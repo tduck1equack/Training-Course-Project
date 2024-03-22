@@ -1,4 +1,5 @@
 import React from "react";
+import "../style/Input.css";
 export default class Input extends React.Component {
   constructor(props) {
     super(props);
@@ -11,6 +12,7 @@ export default class Input extends React.Component {
           type="text"
           value={this.props.value}
           onChange={this.props.onChangeHandler}
+          placeholder="What needs to be done?"
         ></input>
       </form>
     );

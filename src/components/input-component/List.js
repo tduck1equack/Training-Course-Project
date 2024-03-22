@@ -1,7 +1,7 @@
 import React from "react";
 import Item from "./Item";
-import Menu from "./Menu";
 import Checkbox from "./Checkbox";
+import "../style/List.css";
 export default class List extends React.Component {
   constructor(props) {
     super(props);
@@ -10,9 +10,6 @@ export default class List extends React.Component {
   render() {
     return (
       <ul>
-        <button onClick={(e) => console.log(this.props.list)}>
-          View from List component
-        </button>
         {this.props.list.map((item) => {
           return (
             <li>
