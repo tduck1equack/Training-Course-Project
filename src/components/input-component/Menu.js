@@ -9,7 +9,7 @@ export default class Menu extends React.Component {
     return (
       <div className="menu">
         <span>
-          {this.props.count} item{this.props.count === 1 ? "" : "s"} left!
+          {this.props.count} item{this.props.count <= 1 ? "" : "s"} left!
         </span>
         <div className="button-menu">
           <div className="center-menu">
