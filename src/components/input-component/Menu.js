@@ -17,7 +17,11 @@ export default class Menu extends React.Component {
             <Button name="Active" />
             <Button name="Completed" />
           </div>
-          <Button name="Clear Completed" special="secondary" />
+          <Button
+            onClick={this.props.clearHandler}
+            name="Clear Completed"
+            special="secondary"
+          />
         </div>
       </div>
     );

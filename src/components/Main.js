@@ -8,7 +8,7 @@ class Main extends React.Component {
   state = {
     todo: "",
     todoList: [],
-    todoListView: [],
+    todoListFiltered: [],
     count: 0,
   };
   handleSubmit = (e) => {
@@ -26,7 +26,7 @@ class Main extends React.Component {
         count: this.state.count + 1,
       });
     }
-    this.setState({ todoListView: this.state.todoList });
+
     this.setState({ todoListView: this.state.todoList, todo: "" });
     console.log(this.state.todoList);
     console.log("Count state: ", this.state.count);
@@ -46,7 +46,16 @@ class Main extends React.Component {
       ),
     });
   };
-
+  handleCount = (e) => {
+    this.setState({
+      count: e.target.checked ? this.state.count - 1 : this.state.count + 1,
+    });
+  };
+  clear = (e) => {
+    this.setState({
+      todoList: this.state.todoList.filter((i) => !i.status),
+    });
+  };
   viewState = () => {
     console.log("todoList state: ", this.state.todoList);
   };
@@ -63,12 +72,16 @@ class Main extends React.Component {
           onSubmitHandler={this.handleSubmit}
         />
         <ArrowDown />
-
         <List
           list={this.state.todoList}
           statusHandler={this.handleChangeStatus}
+          countHandler={this.handleCount}
         />
-        {this.state.count > 0 ? <Menu count={this.state.count} /> : ""}
+        {this.state.todoList.length ? (
+          <Menu count={this.state.count} clearHandler={this.clear} />
+        ) : (
+          ""
+        )}
       </div>
     );
   }

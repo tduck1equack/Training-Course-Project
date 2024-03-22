@@ -9,6 +9,7 @@ export default class Checkbox extends React.Component {
         type="checkbox"
         checked={this.props.checked}
         onClick={this.props.onClickHandler}
+        onChange={this.props.onChangeHandler}
       ></input>
     );
   }

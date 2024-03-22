@@ -16,6 +16,7 @@ export default class List extends React.Component {
               <Checkbox
                 checked={item.status}
                 onClickHandler={() => this.props.statusHandler(item)}
+                onChangeHandler={this.props.countHandler}
               />
               <Item name={item.name} completed={item.status} />
             </li>
