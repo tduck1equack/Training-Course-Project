@@ -1,0 +1,12 @@
+.paginator {
+  padding: 10px 0px;
+}
+.paginator .button-list {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 3%;
+}
+.paginator .button-list li {
+  border: none;
+}

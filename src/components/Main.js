@@ -7,6 +7,7 @@ import "./style/Main.css";
 class Main extends React.Component {
   state = {
     todo: "",
+    edit: "",
     todoList: [],
     todoListFiltered: [],
     count: 0,
@@ -21,8 +22,10 @@ class Main extends React.Component {
             id: this.state.todoList.length + 1,
             name: this.state.todo,
             status: false,
+            isEdited: false,
           },
         ],
+        todoListFiltered: this.state.todoList,
         count: this.state.count + 1,
       });
     }
@@ -30,9 +33,10 @@ class Main extends React.Component {
     this.setState({ todoListView: this.state.todoList, todo: "" });
     console.log(this.state.todoList);
     console.log("Count state: ", this.state.count);
-    console.log("View: ", this.state.todoListView);
+    console.log("View: ", this.state.todoListFiltered);
   };
   handleInputChange = (e) => {
+    console.log(e.target.value);
     if (e.target.value !== undefined) {
       this.setState({
         todo: e.target.value,
@@ -51,7 +55,31 @@ class Main extends React.Component {
       count: e.target.checked ? this.state.count - 1 : this.state.count + 1,
     });
   };
-  clear = (e) => {
+  handleEdit = (item) => {
+    this.setState({
+      todoList: this.state.todoList.map((i) =>
+        i.id === item.id ? { ...i, isEdited: !i.isEdited } : i
+      ),
+      edit: item.name,
+    });
+  };
+  editSubmit = (item) => {
+    console.log(this.state.edit);
+    this.setState({
+      todoList: this.state.todoList.map((i) =>
+        i.isEdited
+          ? { ...i, name: this.state.edit, ...i, isEdited: !i.isEdited }
+          : i
+      ),
+      edit: "",
+    });
+  };
+  handleEditChange = (e) => {
+    this.setState({
+      edit: e.target.value,
+    });
+  };
+  clearCompleted = (e) => {
     this.setState({
       todoList: this.state.todoList.filter((i) => !i.status),
     });
@@ -66,19 +94,25 @@ class Main extends React.Component {
   render() {
     return (
       <div className="input-wrapper">
+        <button onClick={() => console.log(this.state.todoList)}>view</button>
         <Input
           value={this.state.todo}
           onChangeHandler={this.handleInputChange}
           onSubmitHandler={this.handleSubmit}
+          placeholder="What needs to be done?"
         />
         <ArrowDown />
         <List
           list={this.state.todoList}
+          edit={this.state.edit}
           statusHandler={this.handleChangeStatus}
           countHandler={this.handleCount}
+          editHandler={this.handleEdit}
+          submitHandler={this.editSubmit}
+          changeHandler={this.handleEditChange}
         />
         {this.state.todoList.length ? (
-          <Menu count={this.state.count} clearHandler={this.clear} />
+          <Menu count={this.state.count} clearHandler={this.clearCompleted} />
         ) : (
           ""
         )}

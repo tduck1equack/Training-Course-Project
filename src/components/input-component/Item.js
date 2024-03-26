@@ -1,4 +1,6 @@
 import React from "react";
+import Checkbox from "./Checkbox";
+
 import "../style/Item.css";
 export default class Item extends React.Component {
   constructor(props) {
@@ -6,8 +8,16 @@ export default class Item extends React.Component {
   }
   render() {
     return (
-      <div className={this.props.completed ? "item completed" : "item"}>
-        {this.props.name}
+      <div
+        onDoubleClick={this.props.onDBClickHandler}
+        className={this.props.status ? "item completed" : "item"}
+      >
+        <Checkbox
+          checked={this.props.status}
+          onChangeHandler={this.props.onChangeStatusHandler}
+          onClickHandler={this.props.onClickHandler}
+        />
+        <div className="item-name">{this.props.name}</div>
       </div>
     );
   }

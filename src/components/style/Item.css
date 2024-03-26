@@ -1,9 +1,12 @@
 .item {
+  display: flex;
   width: 100%;
   padding: 15px;
   color: #484848;
   font-weight: 400;
   font-size: 24px;
+}
+.item-name {
   overflow: auto;
   word-wrap: break-word;
 }

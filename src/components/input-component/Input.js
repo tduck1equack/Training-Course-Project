@@ -12,7 +12,7 @@ export default class Input extends React.Component {
           type="text"
           value={this.props.value}
           onChange={this.props.onChangeHandler}
-          placeholder="What needs to be done?"
+          placeholder={this.props.placeholder}
         ></input>
       </form>
     );
