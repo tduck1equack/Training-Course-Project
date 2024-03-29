@@ -48,11 +48,9 @@ class Main extends React.Component {
   };
   handleInputChange = (e) => {
     console.log(e.target.value);
-    if (e.target.value !== undefined) {
-      this.setState({
-        todo: e.target.value,
-      });
-    }
+    this.setState({
+      todo: e.target.value,
+    });
   };
   handleChangeStatus = (item) => {
     this.setState({
