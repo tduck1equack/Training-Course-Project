@@ -19,16 +19,16 @@ export default class List extends React.Component {
   handlePageChange = (num) => {
     this.setState({
       pageIndex: num,
-      view: this.props.view.slice(
+      view: this.props.list.slice(
         num * this.state.itemPerPage - this.state.itemPerPage,
         num * this.state.itemPerPage
       ),
     });
   };
   componentDidUpdate(prevProps) {
-    if (this.props.view !== prevProps.view) {
+    if (this.props.list !== prevProps.list) {
       this.setState({
-        view: this.props.view.slice(
+        view: this.props.list.slice(
           this.state.pageIndex * this.state.itemPerPage -
             this.state.itemPerPage,
           this.state.pageIndex * this.state.itemPerPage
@@ -53,6 +53,7 @@ export default class List extends React.Component {
                 onClickHandler={() => this.props.statusHandler(item)}
                 onChangeStatusHandler={this.props.countHandler}
                 onDBClickHandler={() => this.props.editHandler(item)}
+                handleEditTodo={() => this.props.editTodoHandler(item.name)}
               />
             </li>
           );

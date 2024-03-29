@@ -87,7 +87,6 @@ class Main extends React.Component {
       count: e.target.checked ? this.state.count - 1 : this.state.count + 1,
     });
   };
-
   handleEdit = (item) => {
     this.setState({
       todoList: this.state.todoList.map((i) =>
@@ -124,10 +123,11 @@ class Main extends React.Component {
     console.log(this.state.todoList);
     console.log("Passed");
   };
-  testFocus = (e) => {
+  testFocus = (item) => {
     console.log("Done");
-    this.inputRef.current.focusTextInput();
     console.log("inputRef: ", this.inputRef);
+    this.inputRef.current.focus();
+    this.inputRef.current.value = item;
   };
   render() {
     let view = this.state.todoList;
@@ -135,8 +135,8 @@ class Main extends React.Component {
       view = this.state.todoList;
     };
     const viewActive = () => {
-      view = this.state.todoList.filter((i) => i.status === false);
-      console.log("Active filtered");
+      view = 1;
+      console.log("Active filtered. View: ", view);
     };
     const viewCompleted = () => {
       view = this.state.todoList.filter((i) => i.status);
@@ -154,7 +154,7 @@ class Main extends React.Component {
           onChangeHandler={this.handleInputChange}
           onSubmitHandler={this.handleSubmit}
           placeholder="What needs to be done?"
-          ref={this.inputRef}
+          inputRef={this.inputRef}
         />
         <ArrowDown onClick={this.toggleCompleted} />
         <List
@@ -165,6 +165,7 @@ class Main extends React.Component {
           editHandler={this.handleEdit}
           submitHandler={this.editSubmit}
           changeHandler={this.handleEditChange}
+          editTodoHandler={this.testFocus}
         />
         {this.state.todoList.length ? (
           <Menu

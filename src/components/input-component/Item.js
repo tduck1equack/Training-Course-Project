@@ -1,5 +1,6 @@
 import React from "react";
 import Checkbox from "./Checkbox";
+import Button from "../menu-component/Button";
 
 import "../style/Item.css";
 export default class Item extends React.Component {
@@ -18,6 +19,8 @@ export default class Item extends React.Component {
           onClickHandler={this.props.onClickHandler}
         />
         <div className="item-name">{this.props.name}</div>
+
+        <Button name="Edit" onClick={this.props.handleEditTodo} />
       </div>
     );
   }
