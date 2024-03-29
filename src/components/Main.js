@@ -29,15 +29,6 @@ class Main extends React.Component {
             isEdited: false,
           },
         ],
-        todoListFiltered: [
-          ...this.state.todoList,
-          {
-            id: this.state.todoList.length + 1,
-            name: this.state.todo,
-            status: false,
-            isEdited: false,
-          },
-        ],
         count: this.state.count + 1,
       });
     }
@@ -84,6 +75,16 @@ class Main extends React.Component {
     this.setState({
       count: e.target.checked ? this.state.count - 1 : this.state.count + 1,
     });
+  };
+  handleDelete = (item) => {
+    this.setState({
+      todoList: this.state.todoList.filter((i) => i.id !== item.id),
+    });
+    if (!item.status) {
+      this.setState({
+        count: this.state.count - 1,
+      });
+    }
   };
   handleEdit = (item) => {
     this.setState({
@@ -133,7 +134,7 @@ class Main extends React.Component {
       view = this.state.todoList;
     };
     const viewActive = () => {
-      view = 1;
+      view = this.state.todoList.filter((i) => !i.status);
       console.log("Active filtered. View: ", view);
     };
     const viewCompleted = () => {
@@ -164,6 +165,7 @@ class Main extends React.Component {
           submitHandler={this.editSubmit}
           changeHandler={this.handleEditChange}
           editTodoHandler={this.testFocus}
+          deleteHandler={this.handleDelete}
         />
         {this.state.todoList.length ? (
           <Menu

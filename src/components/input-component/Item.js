@@ -21,6 +21,7 @@ export default class Item extends React.Component {
         <div className="item-name">{this.props.name}</div>
 
         <Button name="Edit" onClick={this.props.handleEditTodo} />
+        <Button name="Delete" onClick={this.props.handleDelete} />
       </div>
     );
   }

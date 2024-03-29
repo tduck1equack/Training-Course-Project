@@ -44,6 +44,9 @@ export default class List extends React.Component {
     );
     return (
       <ul>
+        <button onClick={() => console.log(this.props.list)}>
+          view from List.js
+        </button>
         {this.state.view.map((item) => {
           return (
             <li key={item.id}>
@@ -52,8 +55,8 @@ export default class List extends React.Component {
                 status={item.status}
                 onClickHandler={() => this.props.statusHandler(item)}
                 onChangeStatusHandler={this.props.countHandler}
-                onDBClickHandler={() => this.props.editHandler(item)}
                 handleEditTodo={() => this.props.editTodoHandler(item.name)}
+                handleDelete={() => this.props.deleteHandler(item)}
               />
             </li>
           );
