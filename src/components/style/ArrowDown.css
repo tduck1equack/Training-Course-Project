@@ -3,9 +3,17 @@
 }
 
 .down-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
   position: absolute;
-  top: -43px;
-  left: 17px;
+  top: -66px;
+  width: 50px;
+  height: 65px;
+}
+.down-button:focus,
+.down-button:active {
+  box-shadow: 1px 1px 8px 3px rgba(184, 63, 69, 0.71);
 }
 
 .icon {

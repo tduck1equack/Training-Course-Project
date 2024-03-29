@@ -19,16 +19,16 @@ export default class List extends React.Component {
   handlePageChange = (num) => {
     this.setState({
       pageIndex: num,
-      view: this.props.list.slice(
+      view: this.props.view.slice(
         num * this.state.itemPerPage - this.state.itemPerPage,
         num * this.state.itemPerPage
       ),
     });
   };
   componentDidUpdate(prevProps) {
-    if (this.props.list !== prevProps.list) {
+    if (this.props.view !== prevProps.view) {
       this.setState({
-        view: this.props.list.slice(
+        view: this.props.view.slice(
           this.state.pageIndex * this.state.itemPerPage -
             this.state.itemPerPage,
           this.state.pageIndex * this.state.itemPerPage

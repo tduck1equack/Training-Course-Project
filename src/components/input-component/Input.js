@@ -13,6 +13,7 @@ export default class Input extends React.Component {
           value={this.props.value}
           onChange={this.props.onChangeHandler}
           placeholder={this.props.placeholder}
+          ref={this.props.ref}
         ></input>
       </form>
     );
