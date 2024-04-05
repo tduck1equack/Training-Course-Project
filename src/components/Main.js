@@ -4,6 +4,11 @@ import List from "./input-component/List";
 import Input from "./input-component/Input";
 import ArrowDown from "./input-component/ArrowDown";
 import "./style/Main.css";
+const FILTER = {
+  ALL: "all",
+  ACTIVE: "active",
+  COMPLETED: "completed",
+};
 class Main extends React.Component {
   constructor() {
     super();
@@ -12,7 +17,8 @@ class Main extends React.Component {
   }
   state = {
     todoList: [],
-    todoListFiltered: [],
+    filter: FILTER.ALL,
+    view: [],
     count: 0,
     editId: 0,
   };
@@ -108,12 +114,6 @@ class Main extends React.Component {
       ),
     });
   };
-
-  handleEditChange = (e) => {
-    this.setState({
-      edit: e.target.value,
-    });
-  };
   clearCompleted = (e) => {
     const { todoList } = this.state;
     this.setState({
@@ -134,20 +134,20 @@ class Main extends React.Component {
     console.log("Editing item with id: ", item.id);
     console.log("Stored ID: ", this.state.editId);
   };
-
   render() {
-    let view = this.state.todoList;
+    const { todoList, filter, count } = this.state;
+    let view = todoList;
     const viewAll = () => {
-      view = this.state.todoList;
-      console.log(view === this.state.todoList);
+      this.setState({ filter: FILTER.ALL });
+      console.log(filter);
     };
     const viewActive = () => {
-      view = this.state.todoList.filter((i) => !i.status);
-      console.log("Active filtered. View: ", view);
-      console.log(view === this.state.todoList);
+      this.setState({ filter: FILTER.ACTIVE });
+      console.log(filter);
     };
     const viewCompleted = () => {
-      view = this.state.todoList.filter((i) => i.status);
+      this.setState({ filter: FILTER.COMPLETED });
+      console.log(filter);
     };
     return (
       <div className="input-wrapper">
@@ -160,6 +160,8 @@ class Main extends React.Component {
         <ArrowDown onClick={this.toggleCompleted} />
         <List
           list={view}
+          filter={filter}
+          filterOptions={FILTER}
           statusHandler={this.handleChangeStatus}
           countHandler={this.handleCount}
           submitHandler={this.editSubmit}
@@ -169,11 +171,12 @@ class Main extends React.Component {
         />
         {this.state.todoList.length ? (
           <Menu
-            count={this.state.count}
+            count={count}
             viewAll={viewAll}
             viewActive={viewActive}
             viewCompleted={viewCompleted}
             clearHandler={this.clearCompleted}
+            filterOptions={FILTER}
           />
         ) : (
           ""
