@@ -5,13 +5,10 @@ export default class Button extends React.Component {
     super(props);
   }
   render() {
+    const { onClick, special, style, name } = this.props;
     return (
-      <button
-        onClick={this.props.onClick}
-        className={this.props.special}
-        style={this.props.style}
-      >
-        {this.props.name}
+      <button onClick={onClick} className={special} style={style}>
+        {name}
       </button>
     );
   }

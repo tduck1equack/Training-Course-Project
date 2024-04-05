@@ -5,67 +5,70 @@ import "../style/List.css";
 export default class List extends React.Component {
   constructor(props) {
     super(props);
+    this.pageIndex = 1;
+    this.pageNumbers = 0;
+    this.itemPerPage = 5;
   }
-  state = {
-    pageIndex: 1,
-    itemPerPage: 5,
-    view: [],
-    pageNumbers: 0,
-  };
   viewStats = () => {
-    console.log("Calculated page numbers: ", this.state.pageNumbers);
+    console.log("Calculated page numbers: ", this.pageNumbers);
     console.log("View: ", this.state.view);
+    console.log("Page Index: ", this.pageIndex);
   };
   handlePageChange = (num) => {
+    this.pageIndex = num;
     this.setState({
-      pageIndex: num,
       view: this.props.list.slice(
-        num * this.state.itemPerPage - this.state.itemPerPage,
-        num * this.state.itemPerPage
+        num * this.itemPerPage - this.itemPerPage,
+        num * this.itemPerPage
       ),
     });
+    console.log("view: ", this.view);
   };
   componentDidUpdate(prevProps) {
     if (this.props.list !== prevProps.list) {
       this.setState({
         view: this.props.list.slice(
-          this.state.pageIndex * this.state.itemPerPage -
-            this.state.itemPerPage,
-          this.state.pageIndex * this.state.itemPerPage
+          this.pageIndex * this.itemPerPage - this.itemPerPage,
+          this.pageIndex * this.itemPerPage
         ),
-        pageNumbers: Math.ceil(this.props.list.length / 5),
       });
+      this.pageNumbers = Math.ceil(this.props.list.length / 5);
     }
   }
 
   render() {
-    const pageNumberArray = [...Array(this.state.pageNumbers + 1).keys()].slice(
-      1
+    const pageNumberArray = [...Array(this.pageNumbers + 1).keys()].slice(1);
+    const {
+      list,
+      statusHandler,
+      countHandler,
+      editTodoHandler,
+      deleteHandler,
+    } = this.props;
+    const view = list.slice(
+      this.pageIndex * this.itemPerPage - this.itemPerPage,
+      this.pageIndex * this.itemPerPage
     );
     return (
       <ul>
-        <button onClick={() => console.log(this.props.list)}>
-          view from List.js
-        </button>
-        {this.state.view.map((item) => {
+        {view.map((item) => {
           return (
             <li key={item.id}>
               <Item
-                name={item.name}
-                status={item.status}
-                onClickHandler={() => this.props.statusHandler(item)}
-                onChangeStatusHandler={this.props.countHandler}
-                handleEditTodo={() => this.props.editTodoHandler(item.name)}
-                handleDelete={() => this.props.deleteHandler(item)}
+                item={item}
+                onClickHandler={statusHandler}
+                onChangeStatusHandler={countHandler}
+                handleEditTodo={editTodoHandler}
+                handleDelete={deleteHandler}
               />
             </li>
           );
         })}
-        {this.state.pageNumbers > 1 ? (
+        {this.pageNumbers > 1 ? (
           <Paginator
             pageNumbers={pageNumberArray}
             onClick={this.handlePageChange}
-            pageIndex={this.state.pageIndex}
+            pageIndex={this.pageIndex}
           />
         ) : (
           ""

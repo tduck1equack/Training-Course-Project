@@ -8,44 +8,53 @@ class Main extends React.Component {
   constructor() {
     super();
     this.inputRef = React.createRef();
+    this.edit = false;
   }
   state = {
-    todo: "",
-    edit: "",
     todoList: [],
     todoListFiltered: [],
     count: 0,
+    editId: 0,
   };
-  handleSubmit = (e) => {
-    e.preventDefault();
-    if (this.state.todo.length > 1) {
+  enableEditSubmit = () => {
+    this.edit = true;
+  };
+  disableEditSubmit = () => {
+    this.edit = false;
+  };
+  addEditToList = (item) => {
+    const { count, todoList } = this.state;
+    if (this.edit) {
       this.setState({
-        todoList: [
-          ...this.state.todoList,
-          {
-            id: this.state.todoList.length + 1,
-            name: this.state.todo,
-            status: false,
-            isEdited: false,
-          },
-        ],
-        count: this.state.count + 1,
+        todoList: todoList.map((i) =>
+          i.id === this.state.editId ? { ...i, name: item } : i
+        ),
       });
+      this.disableEditSubmit();
+    } else {
+      if (item.length > 1) {
+        this.setState({
+          todoList: [
+            ...todoList,
+            {
+              id: todoList.length + 1,
+              name: item,
+              status: false,
+              isEdited: false,
+            },
+          ],
+          count: count + 1,
+        });
+      }
     }
-    this.setState({ todoListFiltered: this.state.todoList, todo: "" });
-    console.log("Count state: ", this.state.count);
-    console.log("List state: ", this.state.todoList);
-    console.log("View: ", this.state.todoListFiltered);
+    console.log("Count state: ", count);
+    console.log("List state: ", todoList);
   };
-  handleInputChange = (e) => {
-    console.log(e.target.value);
-    this.setState({
-      todo: e.target.value,
-    });
-  };
+
   handleChangeStatus = (item) => {
+    const { todoList } = this.state;
     this.setState({
-      todoList: this.state.todoList.map((i) =>
+      todoList: todoList.map((i) =>
         i.id === item.id ? { ...i, status: !i.status } : i
       ),
     });
@@ -54,125 +63,116 @@ class Main extends React.Component {
   //doesn't just flip todos' status
   //but rather change them all to status true or false
   toggleCompleted = (e) => {
+    const { todoList } = this.state;
     if (e.target.checked) {
       this.setState({
-        todoList: this.state.todoList.map((i) => ({
+        todoList: todoList.map((i) => ({
           ...i,
           status: true,
         })),
+        count: 0,
       });
     } else {
       this.setState({
-        todoList: this.state.todoList.map((i) => ({
+        todoList: todoList.map((i) => ({
           ...i,
           status: false,
         })),
+        count: todoList.length,
       });
     }
     console.log("Toggled!");
   };
   handleCount = (e) => {
+    const { count } = this.state;
     this.setState({
-      count: e.target.checked ? this.state.count - 1 : this.state.count + 1,
+      count: e.target.checked ? count - 1 : count + 1,
     });
   };
   handleDelete = (item) => {
+    const { todoList, count } = this.state;
     this.setState({
-      todoList: this.state.todoList.filter((i) => i.id !== item.id),
+      todoList: todoList.filter((i) => i.id !== item.id),
     });
     if (!item.status) {
       this.setState({
-        count: this.state.count - 1,
+        count: count - 1,
       });
     }
   };
   handleEdit = (item) => {
+    const { todoList } = this.state;
     this.setState({
-      todoList: this.state.todoList.map((i) =>
+      todoList: todoList.map((i) =>
         i.id === item.id ? { ...i, isEdited: !i.isEdited } : i
       ),
-      edit: item.name,
     });
   };
-  editSubmit = (item) => {
-    console.log(this.state.edit);
-    this.setState({
-      todoList: this.state.todoList.map((i) =>
-        i.isEdited
-          ? { ...i, name: this.state.edit, ...i, isEdited: !i.isEdited }
-          : i
-      ),
-      edit: "",
-    });
-  };
+
   handleEditChange = (e) => {
     this.setState({
       edit: e.target.value,
     });
   };
   clearCompleted = (e) => {
+    const { todoList } = this.state;
     this.setState({
-      todoList: this.state.todoList.filter((i) => !i.status),
+      todoList: todoList.filter((i) => !i.status),
     });
   };
-  viewState = () => {
-    console.log("todoList state: ", this.state.todoList);
-  };
-  test = (e) => {
-    console.log(this.state.todoList);
-    console.log("Passed");
-  };
-  testFocus = (item) => {
+  handleEditRequest = (item) => {
     console.log("Done");
     console.log("inputRef: ", this.inputRef);
+    this.enableEditSubmit();
     this.inputRef.current.focus();
-    this.inputRef.current.value = item;
+    this.inputRef.current.value = item.name;
+    this.setState({
+      editId: item.id,
+    });
+    console.log("Target: ", item);
+    console.log("Edit: ", this.edit);
+    console.log("Editing item with id: ", item.id);
+    console.log("Stored ID: ", this.state.editId);
   };
+
   render() {
     let view = this.state.todoList;
     const viewAll = () => {
       view = this.state.todoList;
+      console.log(view === this.state.todoList);
     };
     const viewActive = () => {
       view = this.state.todoList.filter((i) => !i.status);
       console.log("Active filtered. View: ", view);
+      console.log(view === this.state.todoList);
     };
     const viewCompleted = () => {
       view = this.state.todoList.filter((i) => i.status);
     };
     return (
       <div className="input-wrapper">
-        <button onClick={() => console.log("View variable: ", view)}>
-          view
-        </button>
-        <button onClick={viewAll}>test All</button>
-        <button onClick={viewActive}>test Active</button>
-        <button onClick={this.testFocus}>test Focus</button>
         <Input
-          value={this.state.todo}
           onChangeHandler={this.handleInputChange}
-          onSubmitHandler={this.handleSubmit}
+          onSubmitHandler={this.addEditToList}
           placeholder="What needs to be done?"
           inputRef={this.inputRef}
         />
         <ArrowDown onClick={this.toggleCompleted} />
         <List
           list={view}
-          edit={this.state.edit}
           statusHandler={this.handleChangeStatus}
           countHandler={this.handleCount}
-          editHandler={this.handleEdit}
           submitHandler={this.editSubmit}
           changeHandler={this.handleEditChange}
-          editTodoHandler={this.testFocus}
+          editTodoHandler={this.handleEditRequest}
           deleteHandler={this.handleDelete}
         />
         {this.state.todoList.length ? (
           <Menu
             count={this.state.count}
-            viewAll={this.viewAll}
-            viewActive={this.viewActive}
-            viewCompleted={this.viewCompleted}
+            viewAll={viewAll}
+            viewActive={viewActive}
+            viewCompleted={viewCompleted}
             clearHandler={this.clearCompleted}
           />
         ) : (

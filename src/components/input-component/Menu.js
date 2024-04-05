@@ -6,19 +6,21 @@ export default class Menu extends React.Component {
     super(props);
   }
   render() {
+    const { count, clearHandler, viewAll, viewActive, viewCompleted } =
+      this.props;
     return (
       <div className="menu">
         <span>
-          {this.props.count} item{this.props.count <= 1 ? "" : "s"} left!
+          {count} item{count <= 1 ? "" : "s"} left!
         </span>
         <div className="button-menu">
           <div className="center-menu">
-            <Button name="All" />
-            <Button name="Active" />
-            <Button name="Completed" />
+            <Button name="All" onClick={viewAll} />
+            <Button name="Active" onClick={viewActive} />
+            <Button name="Completed" onClick={viewCompleted} />
           </div>
           <Button
-            onClick={this.props.clearHandler}
+            onClick={clearHandler}
             name="Clear Completed"
             special="secondary"
           />

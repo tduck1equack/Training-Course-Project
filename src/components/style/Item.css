@@ -1,5 +1,6 @@
 .item {
   display: flex;
+  align-items: center;
   width: 100%;
   padding: 15px;
   color: #484848;
@@ -10,6 +11,11 @@
   width: 100%;
   overflow: auto;
   word-wrap: break-word;
+}
+.side-menu {
+  display: flex;
+  align-items: center;
+  gap: 5%;
 }
 
 .completed {

@@ -5,17 +5,32 @@ export default class Input extends React.Component {
     super(props);
   }
   state = {
-    todo: "",
+    input: "",
+  };
+  handleSubmit = (e) => {
+    e.preventDefault();
+    const { onSubmitHandler } = this.props;
+    const { input } = this.state;
+    onSubmitHandler(input);
+    this.setState({ input: "" });
+  };
+  handleInputChange = (e) => {
+    console.log(e.target.value);
+    this.setState({
+      input: e.target.value,
+    });
   };
   render() {
+    const { value, placeholder, inputRef } = this.props;
+    const { input } = this.state;
     return (
-      <form onSubmit={this.props.onSubmitHandler}>
+      <form onSubmit={this.handleSubmit}>
         <input
           type="text"
-          value={this.props.value}
-          onChange={this.props.onChangeHandler}
-          placeholder={this.props.placeholder}
-          ref={this.props.inputRef}
+          value={input}
+          onChange={this.handleInputChange}
+          placeholder={placeholder}
+          ref={inputRef}
         ></input>
       </form>
     );
