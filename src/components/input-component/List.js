@@ -119,15 +119,8 @@ export default class List extends React.Component {
           <Button
             name="Scroll view"
             onClick={() => {
-              console.log(view);
               this.handleViewMode(VIEWMODE.SCROLL);
             }}
-          />
-          <Button name="view stat" onClick={() => this.viewStats(view)} />
-          <Button name="increase" onClick={() => this.pageIndex++} />
-          <Button
-            name="List reference"
-            onClick={() => console.log(this.viewRef)}
           />
         </div>
         <ul
