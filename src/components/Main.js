@@ -13,24 +13,23 @@ class Main extends React.Component {
   constructor() {
     super();
     this.inputRef = React.createRef();
+    this.editId = null;
   }
   state = {
     todoList: [],
     filter: FILTER.ALL,
     view: [],
     count: 0,
-    editId: null,
   };
   addEditToList = (item) => {
-    const { count, todoList, editId } = this.state;
-    if (editId) {
+    const { count, todoList } = this.state;
+    if (this.editId) {
       this.setState({
         todoList: todoList.map((i) =>
-          i.id === this.state.editId ? { ...i, name: item } : i
+          i.id === this.editId ? { ...i, name: item } : i
         ),
-        editId: null,
       });
-      console.log(editId);
+      this.editId = null;
     } else {
       if (item.length > 1) {
         this.setState({
@@ -102,9 +101,7 @@ class Main extends React.Component {
   handleEditRequest = (item) => {
     this.inputRef.current.focus();
     this.inputRef.current.value = item.name;
-    this.setState({
-      editId: item.id,
-    });
+    this.editId = item.id;
   };
   handleFilter = (filter) => {
     this.setState({ filter });
@@ -115,6 +112,7 @@ class Main extends React.Component {
     let view = todoList;
     return (
       <div className="input-wrapper">
+        <button onClick={() => console.log(this.editId)}>view editId</button>
         <Input
           onChangeHandler={this.handleInputChange}
           onSubmitHandler={this.addEditToList}
