@@ -34,6 +34,7 @@ export default class List extends React.Component {
   handleViewMode = (viewMode) => {
     this.setState({ viewMode });
     this.pageIndex = 1;
+    this.setState({ visible: 1 });
   };
   handleScroll = () => {
     //this function calculates the scrolled distance by scrollHeight
@@ -68,13 +69,13 @@ export default class List extends React.Component {
     }
   }
   handlePageChange = (num, view) => {
+    const { visible } = this.state;
     this.pageIndex = num;
+    this.setState({ visible: num });
     view = view.slice(
-      num * this.itemPerPage - this.itemPerPage,
-      num * this.itemPerPage
+      visible * this.itemPerPage - this.itemPerPage,
+      visible * this.itemPerPage
     );
-    console.log(this.pageIndex);
-    console.log(view);
   };
   render() {
     const pageNumberArray = [...Array(this.pageNumbers + 1).keys()].slice(1);
@@ -107,8 +108,8 @@ export default class List extends React.Component {
             break;
         }
         view = view.slice(
-          this.pageIndex * this.itemPerPage - this.itemPerPage,
-          this.pageIndex * this.itemPerPage
+          visible * this.itemPerPage - this.itemPerPage,
+          visible * this.itemPerPage
         );
         break;
       case VIEWMODE.SCROLL:
@@ -159,7 +160,7 @@ export default class List extends React.Component {
               view={view}
               pageNumbers={pageNumberArray}
               onClick={this.handlePageChange}
-              pageIndex={this.pageIndex}
+              pageIndex={visible}
             />
           ) : (
             ""

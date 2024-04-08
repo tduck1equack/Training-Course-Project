@@ -98,12 +98,8 @@ class Main extends React.Component {
     const { todoList, count } = this.state;
     this.setState({
       todoList: todoList.filter((i) => i.id !== item.id),
+      count: !item.status ? count - 1 : count,
     });
-    if (!item.status) {
-      this.setState({
-        count: count - 1,
-      });
-    }
   };
   clearCompleted = (e) => {
     const { todoList } = this.state;
@@ -112,18 +108,13 @@ class Main extends React.Component {
     });
   };
   handleEditRequest = (item) => {
-    console.log("Done");
-    console.log("inputRef: ", this.inputRef);
     this.enableEditSubmit();
+    console.log(this.inputRef);
     this.inputRef.current.focus();
     this.inputRef.current.value = item.name;
     this.setState({
       editId: item.id,
     });
-    console.log("Target: ", item);
-    console.log("Edit: ", this.edit);
-    console.log("Editing item with id: ", item.id);
-    console.log("Stored ID: ", this.state.editId);
   };
   handleFilter = (filter) => {
     this.setState({ filter });
