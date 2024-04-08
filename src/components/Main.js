@@ -18,6 +18,7 @@ class Main extends React.Component {
   state = {
     todoList: [],
     filter: FILTER.ALL,
+    view: [],
     count: 0,
     editId: null,
   };

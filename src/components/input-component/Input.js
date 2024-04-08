@@ -21,7 +21,7 @@ export default class Input extends React.Component {
     });
   };
   render() {
-    const { value, placeholder, inputRef } = this.props;
+    const { placeholder, inputRef } = this.props;
     const { input } = this.state;
     return (
       <form onSubmit={this.handleSubmit}>

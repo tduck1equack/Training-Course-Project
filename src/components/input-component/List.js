@@ -38,7 +38,10 @@ export default class List extends React.Component {
     //this function calculates the scrolled distance by scrollHeight
     //minus clientHeight, which are the total height of the <ul> (including
     //overflow content) and the ul's actual rendered height
-    //then compares this with scrollTop property, which shows the scrolled distance
+    //then compares this with scrollTop property, which shows the distance the scroll pointer
+    //has traveled along the scroll bar.
+    //the values equalling each other indicates that user has scrolled to the bottom of the list
+    //thus incrementing the visible state and rerenders the list, showing 5 more of the list
     const { list } = this.props;
     const { visible } = this.state;
     const visibleInstances = Math.ceil(list.length / 5);
