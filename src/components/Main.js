@@ -4,7 +4,7 @@ import List from "./input-component/List";
 import Input from "./input-component/Input";
 import ArrowDown from "./input-component/ArrowDown";
 import "./style/Main.css";
-const FILTER = {
+export const FILTER = {
   ALL: "all",
   ACTIVE: "active",
   COMPLETED: "completed",
@@ -18,9 +18,8 @@ class Main extends React.Component {
   state = {
     todoList: [],
     filter: FILTER.ALL,
-    view: [],
     count: 0,
-    editId: 0,
+    editId: null,
   };
   enableEditSubmit = () => {
     this.edit = true;
@@ -46,7 +45,6 @@ class Main extends React.Component {
               id: todoList.length + 1,
               name: item,
               status: false,
-              isEdited: false,
             },
           ],
           count: count + 1,
@@ -106,14 +104,6 @@ class Main extends React.Component {
       });
     }
   };
-  handleEdit = (item) => {
-    const { todoList } = this.state;
-    this.setState({
-      todoList: todoList.map((i) =>
-        i.id === item.id ? { ...i, isEdited: !i.isEdited } : i
-      ),
-    });
-  };
   clearCompleted = (e) => {
     const { todoList } = this.state;
     this.setState({
@@ -134,21 +124,13 @@ class Main extends React.Component {
     console.log("Editing item with id: ", item.id);
     console.log("Stored ID: ", this.state.editId);
   };
+  handleFilter = (filter) => {
+    this.setState({ filter });
+    console.log(filter);
+  };
   render() {
     const { todoList, filter, count } = this.state;
     let view = todoList;
-    const viewAll = () => {
-      this.setState({ filter: FILTER.ALL });
-      console.log(filter);
-    };
-    const viewActive = () => {
-      this.setState({ filter: FILTER.ACTIVE });
-      console.log(filter);
-    };
-    const viewCompleted = () => {
-      this.setState({ filter: FILTER.COMPLETED });
-      console.log(filter);
-    };
     return (
       <div className="input-wrapper">
         <Input
@@ -172,9 +154,7 @@ class Main extends React.Component {
         {this.state.todoList.length ? (
           <Menu
             count={count}
-            viewAll={viewAll}
-            viewActive={viewActive}
-            viewCompleted={viewCompleted}
+            handleFilter={this.handleFilter}
             clearHandler={this.clearCompleted}
             filterOptions={FILTER}
           />

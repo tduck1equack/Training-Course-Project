@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from "prop-types";
 export default class Checkbox extends React.Component {
   constructor(props) {
     super(props);
@@ -14,3 +15,9 @@ export default class Checkbox extends React.Component {
     );
   }
 }
+
+Checkbox.propTypes = {
+  checked: PropTypes.bool,
+  onClickHandler: PropTypes.func,
+  onChangeHandler: PropTypes.func,
+};

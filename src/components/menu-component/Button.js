@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from "prop-types";
 import "../style/Button.css";
 export default class Button extends React.Component {
   constructor(props) {
@@ -13,3 +14,12 @@ export default class Button extends React.Component {
     );
   }
 }
+Button.propTypes = {
+  onClick: PropTypes.func,
+  name: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+  special: PropTypes.string,
+  style: PropTypes.object,
+};
+Button.defaultProps = {
+  name: "Button Sample",
+};
