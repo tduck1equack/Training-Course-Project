@@ -13,7 +13,6 @@ class Main extends React.Component {
   constructor() {
     super();
     this.inputRef = React.createRef();
-    this.edit = false;
   }
   state = {
     todoList: [],
@@ -22,21 +21,16 @@ class Main extends React.Component {
     count: 0,
     editId: null,
   };
-  enableEditSubmit = () => {
-    this.edit = true;
-  };
-  disableEditSubmit = () => {
-    this.edit = false;
-  };
   addEditToList = (item) => {
-    const { count, todoList } = this.state;
-    if (this.edit) {
+    const { count, todoList, editId } = this.state;
+    if (editId) {
       this.setState({
         todoList: todoList.map((i) =>
           i.id === this.state.editId ? { ...i, name: item } : i
         ),
+        editId: null,
       });
-      this.disableEditSubmit();
+      console.log(editId);
     } else {
       if (item.length > 1) {
         this.setState({
@@ -52,8 +46,6 @@ class Main extends React.Component {
         });
       }
     }
-    console.log("Count state: ", count);
-    console.log("List state: ", todoList);
   };
 
   handleChangeStatus = (item) => {
@@ -108,8 +100,6 @@ class Main extends React.Component {
     });
   };
   handleEditRequest = (item) => {
-    this.enableEditSubmit();
-    console.log(this.inputRef);
     this.inputRef.current.focus();
     this.inputRef.current.value = item.name;
     this.setState({
