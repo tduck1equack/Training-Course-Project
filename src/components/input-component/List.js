@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from "prop-types";
 import Item from "./Item";
 import Paginator from "./Paginator";
 import "../style/List.css";
@@ -49,9 +50,14 @@ export default class List extends React.Component {
       Math.ceil(this.viewRef.current.scrollTop) ===
       this.viewRef.current.scrollHeight - this.viewRef.current.clientHeight
     ) {
-      if (visible !== visibleInstances) {
-        this.setState({ visible: visible + 1 });
-      }
+      this.setState({
+        visible:
+          visible < visibleInstances
+            ? visible + 1
+            : visible === visibleInstances
+            ? visible
+            : visible - 1,
+      });
       console.log(visible);
     }
   };
@@ -163,3 +169,7 @@ export default class List extends React.Component {
     );
   }
 }
+List.propTypes = {
+  list: PropTypes.array,
+  filter: PropTypes.object,
+};
