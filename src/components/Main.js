@@ -1,9 +1,11 @@
 import React from "react";
+import { produce } from "immer";
 import Menu from "./input-component/Menu";
 import List from "./input-component/List";
 import Input from "./input-component/Input";
 import ArrowDown from "./input-component/ArrowDown";
 import "./style/Main.css";
+import HOCButton from "./menu-component/HOCButton";
 export const FILTER = {
   ALL: "all",
   ACTIVE: "active",
@@ -22,38 +24,41 @@ class Main extends React.Component {
     count: 0,
   };
   addEditToList = (item) => {
-    const { count, todoList } = this.state;
+    const { todoList } = this.state;
     if (this.editId) {
-      this.setState({
-        todoList: todoList.map((i) =>
-          i.id === this.editId ? { ...i, name: item } : i
-        ),
-      });
+      this.setState(
+        /*  produce((draft) => {
+          // const todo = draft.todoList[this.editId - 1];
+          draft.count = draft.count + 1;
+          console.log(draft.todoList);
+        }) */
+        {
+          todoList: todoList.map((i) =>
+            i.id === this.editId ? { ...i, name: item } : i
+          ),
+        }
+      );
       this.editId = null;
     } else {
       if (item.length > 1) {
-        this.setState({
-          todoList: [
-            ...todoList,
-            {
-              id: todoList.length + 1,
-              name: item,
-              status: false,
-            },
-          ],
-          count: count + 1,
-        });
+        this.setState(
+          produce((draft) => {
+            const todo = { id: todoList.length + 1, name: item, status: false };
+            draft.todoList.push(todo);
+            draft.count = draft.count + 1;
+          })
+        );
       }
     }
   };
 
   handleChangeStatus = (item) => {
-    const { todoList } = this.state;
-    this.setState({
-      todoList: todoList.map((i) =>
-        i.id === item.id ? { ...i, status: !i.status } : i
-      ),
-    });
+    this.setState(
+      produce((draft) => {
+        const todo = draft.todoList[item.id - 1];
+        todo.status = !todo.status;
+      })
+    );
   };
   //setting toggleCompleted like this so this event handler
   //doesn't just flip todos' status
@@ -112,7 +117,7 @@ class Main extends React.Component {
     let view = todoList;
     return (
       <div className="input-wrapper">
-        <button onClick={() => console.log(this.editId)}>view editId</button>
+        <HOCButton />
         <Input
           onChangeHandler={this.handleInputChange}
           onSubmitHandler={this.addEditToList}

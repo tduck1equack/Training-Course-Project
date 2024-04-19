@@ -6,10 +6,12 @@ import "./App.css";
 class App extends React.Component {
   render() {
     return (
-      <div className="margin-container">
-        <Header />
-        <Main />
-        <Footer />
+      <div className="background">
+        <div className="margin-container">
+          <Header />
+          <Main />
+          <Footer />
+        </div>
       </div>
     );
   }
