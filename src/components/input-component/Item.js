@@ -21,7 +21,11 @@ export default class Item extends React.Component {
         {({ theme }) => (
           <div
             className={item.status ? "item completed" : "item"}
-            style={{ color: theme.textColor, background: theme.secondary }}
+            style={{
+              color: theme.textColor,
+              background: theme.secondary,
+              transition: "all 0.5s ease",
+            }}
           >
             <Checkbox
               checked={item.status}

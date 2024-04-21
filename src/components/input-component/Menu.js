@@ -13,7 +13,9 @@ export default class Menu extends React.Component {
       <ThemeConsumer>
         {({ theme }) => (
           <div className="menu">
-            <span style={{ color: theme.textColor }}>
+            <span
+              style={{ color: theme.textColor, transition: "all 0.5s ease" }}
+            >
               {count} item{count <= 1 ? "" : "s"} left!
             </span>
             <div className="button-menu">

@@ -6,12 +6,14 @@ const THEME = {
     secondary: "#fff",
     button: "#fff",
     textColor: "#000000",
+    header: "#b83f45",
   },
   DARK: {
     background: "#31363f",
     secondary: "#222831",
     button: "#76abae",
     textColor: "#ffffff",
+    header: "#ffffff",
   },
 };
 

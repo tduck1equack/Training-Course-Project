@@ -8,7 +8,10 @@ class ThemeButton extends React.Component {
     const { theme, changeTheme } = this.context;
     return (
       <ThemeChanger>
-        <button onClick={changeTheme} style={{ backgroundColor: theme.button }}>
+        <button
+          onClick={changeTheme}
+          style={{ backgroundColor: theme.button, transition: "all 0.5s ease" }}
+        >
           Theme
         </button>
       </ThemeChanger>

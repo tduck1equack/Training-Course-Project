@@ -122,7 +122,10 @@ class Main extends React.Component {
         {({ theme }) => (
           <div
             className="input-wrapper"
-            style={{ backgroundColor: theme.secondary }}
+            style={{
+              backgroundColor: theme.secondary,
+              transition: "all 0.5s ease",
+            }}
           >
             <Input
               onChangeHandler={this.handleInputChange}

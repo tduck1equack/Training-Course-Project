@@ -11,7 +11,10 @@ class App extends React.Component {
         {({ theme }) => (
           <div
             className="background"
-            style={{ backgroundColor: theme.background }}
+            style={{
+              backgroundColor: theme.background,
+              transition: "all 0.5s ease",
+            }}
           >
             <div className="margin-container">
               <Header />

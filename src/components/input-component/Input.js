@@ -38,6 +38,7 @@ export default class Input extends React.Component {
               style={{
                 backgroundColor: theme.secondary,
                 color: theme.textColor,
+                transition: "all 0.5s ease",
               }}
             ></input>
           </form>

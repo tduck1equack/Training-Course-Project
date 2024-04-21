@@ -8,15 +8,18 @@ export default class Footer extends React.Component {
       <ThemeConsumer>
         {({ theme }) => (
           <div className="footer">
-            <p style={{ color: theme.textColor }}>
+            <p style={{ color: theme.textColor, transition: "all 0.5s ease" }}>
               Double-click to edit a todo
             </p>
-            <p style={{ color: theme.textColor }}>
+            <p style={{ color: theme.textColor, transition: "all 0.5s ease" }}>
               Created by the TodoMVC Team
             </p>
-            <p style={{ color: theme.textColor }}>
+            <p style={{ color: theme.textColor, transition: "all 0.5s ease" }}>
               Part of{" "}
-              <a style={{ color: theme.textColor }} href="https://todomvc.com/">
+              <a
+                style={{ color: theme.textColor, transition: "all 0.5s ease" }}
+                href="https://todomvc.com/"
+              >
                 TodoMVC
               </a>
             </p>

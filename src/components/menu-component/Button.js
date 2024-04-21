@@ -15,7 +15,11 @@ export default class Button extends React.Component {
           <button
             onClick={onClick}
             className={special}
-            style={style ? style : { backgroundColor: theme.button }}
+            style={
+              style
+                ? style
+                : { backgroundColor: theme.button, transition: "all 0.5s ease" }
+            }
           >
             {name}
           </button>
