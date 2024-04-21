@@ -1,16 +1,26 @@
 import React from "react";
 import PropTypes from "prop-types";
 import "../style/Button.css";
+import { ThemeConsumer, ThemeContext } from "../style/theme";
 export default class Button extends React.Component {
   constructor(props) {
     super(props);
   }
   render() {
     const { onClick, special, style, name } = this.props;
+    const { theme } = this.context;
     return (
-      <button onClick={onClick} className={special} style={style}>
-        {name}
-      </button>
+      <ThemeConsumer>
+        {({ theme }) => (
+          <button
+            onClick={onClick}
+            className={special}
+            style={style ? style : { backgroundColor: theme.button }}
+          >
+            {name}
+          </button>
+        )}
+      </ThemeConsumer>
     );
   }
 }
@@ -23,3 +33,4 @@ Button.propTypes = {
 Button.defaultProps = {
   name: "Button Sample",
 };
+Button.contextType = ThemeContext;

@@ -4,8 +4,9 @@ import Menu from "./input-component/Menu";
 import List from "./input-component/List";
 import Input from "./input-component/Input";
 import ArrowDown from "./input-component/ArrowDown";
-import "./style/Main.css";
 import HOCButton from "./menu-component/HOCButton";
+import "./style/Main.css";
+import { ThemeContext, ThemeConsumer } from "./style/theme";
 export const FILTER = {
   ALL: "all",
   ACTIVE: "active",
@@ -114,40 +115,49 @@ class Main extends React.Component {
   };
   render() {
     const { todoList, filter, count } = this.state;
+    const { theme } = this.context;
     let view = todoList;
     return (
-      <div className="input-wrapper">
-        <HOCButton />
-        <Input
-          onChangeHandler={this.handleInputChange}
-          onSubmitHandler={this.addEditToList}
-          placeholder="What needs to be done?"
-          inputRef={this.inputRef}
-        />
-        <ArrowDown onClick={this.toggleCompleted} />
-        <List
-          list={view}
-          filter={filter}
-          filterOptions={FILTER}
-          statusHandler={this.handleChangeStatus}
-          countHandler={this.handleCount}
-          submitHandler={this.editSubmit}
-          changeHandler={this.handleEditChange}
-          editTodoHandler={this.handleEditRequest}
-          deleteHandler={this.handleDelete}
-        />
-        {this.state.todoList.length ? (
-          <Menu
-            count={count}
-            handleFilter={this.handleFilter}
-            clearHandler={this.clearCompleted}
-            filterOptions={FILTER}
-          />
-        ) : (
-          ""
+      <ThemeConsumer>
+        {({ theme }) => (
+          <div
+            className="input-wrapper"
+            style={{ backgroundColor: theme.secondary }}
+          >
+            <Input
+              onChangeHandler={this.handleInputChange}
+              onSubmitHandler={this.addEditToList}
+              placeholder="What needs to be done?"
+              inputRef={this.inputRef}
+            />
+            <ArrowDown onClick={this.toggleCompleted} />
+            <List
+              list={view}
+              filter={filter}
+              filterOptions={FILTER}
+              statusHandler={this.handleChangeStatus}
+              countHandler={this.handleCount}
+              submitHandler={this.editSubmit}
+              changeHandler={this.handleEditChange}
+              editTodoHandler={this.handleEditRequest}
+              deleteHandler={this.handleDelete}
+            />
+            {this.state.todoList.length ? (
+              <Menu
+                count={count}
+                handleFilter={this.handleFilter}
+                clearHandler={this.clearCompleted}
+                filterOptions={FILTER}
+              />
+            ) : (
+              ""
+            )}
+          </div>
         )}
-      </div>
+      </ThemeConsumer>
     );
   }
 }
+
+Main.contextType = ThemeContext;
 export default Main;

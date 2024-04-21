@@ -5,6 +5,7 @@ import Paginator from "./Paginator";
 import "../style/List.css";
 import Button from "../menu-component/Button";
 import { FILTER } from "../Main";
+import ThemeButton from "../menu-component/ThemeButton";
 export const VIEWMODE = {
   PAGES: "pages",
   SCROLL: "scroll",
@@ -121,17 +122,20 @@ export default class List extends React.Component {
 
     return (
       <div>
-        <div className="view-menu">
-          <Button
-            name="Page view"
-            onClick={() => this.handleViewMode(VIEWMODE.PAGES)}
-          />
-          <Button
-            name="Scroll view"
-            onClick={() => {
-              this.handleViewMode(VIEWMODE.SCROLL);
-            }}
-          />
+        <div className="action-menu">
+          <div className="view-menu">
+            <Button
+              name="Page view"
+              onClick={() => this.handleViewMode(VIEWMODE.PAGES)}
+            />
+            <Button
+              name="Scroll view"
+              onClick={() => {
+                this.handleViewMode(VIEWMODE.SCROLL);
+              }}
+            />
+          </div>
+          <ThemeButton />
         </div>
         <ul
           ref={this.viewRef}

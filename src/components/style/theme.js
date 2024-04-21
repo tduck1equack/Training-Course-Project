@@ -1,13 +1,13 @@
 import React from "react";
 
-const theme = {
-  light: {
+const THEME = {
+  LIGHT: {
     background: "#f5f5f5",
     secondary: "#fff",
     button: "#fff",
     textColor: "#000000",
   },
-  dark: {
+  DARK: {
     background: "#31363f",
     secondary: "#222831",
     button: "#76abae",
@@ -15,9 +15,36 @@ const theme = {
   },
 };
 
-const ThemeContext = React.createContext(theme.light);
+const ThemeContext = React.createContext({
+  theme: THEME.LIGHT,
+  changeTheme: () => null,
+});
 
 const ThemeConsumer = ThemeContext.Consumer;
 const ThemeProvider = ThemeContext.Provider;
 
-export { theme, ThemeContext, ThemeConsumer, ThemeProvider };
+class ThemeChanger extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      theme: THEME.LIGHT,
+    };
+  }
+  changeTheme = () => {
+    this.setState((prevState) => {
+      return {
+        theme: prevState.theme === THEME.LIGHT ? THEME.DARK : THEME.LIGHT,
+      };
+    });
+  };
+  render() {
+    const { children } = this.props;
+    const { theme } = this.state;
+    return (
+      <ThemeProvider value={{ theme, changeTheme: this.changeTheme }}>
+        {children}
+      </ThemeProvider>
+    );
+  }
+}
+export { THEME, ThemeContext, ThemeConsumer, ThemeProvider, ThemeChanger };

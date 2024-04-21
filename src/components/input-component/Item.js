@@ -3,6 +3,7 @@ import Checkbox from "./Checkbox";
 import Button from "../menu-component/Button";
 import { PropTypes } from "prop-types";
 import "../style/Item.css";
+import { ThemeConsumer, ThemeContext } from "../style/theme";
 export default class Item extends React.Component {
   constructor(props) {
     super(props);
@@ -16,19 +17,26 @@ export default class Item extends React.Component {
       handleEditTodo,
     } = this.props;
     return (
-      <div className={item.status ? "item completed" : "item"}>
-        <Checkbox
-          checked={item.status}
-          onChangeHandler={onChangeStatusHandler}
-          onClickHandler={() => onClickHandler(item)}
-        />
-        <div className="item-name">{item.name}</div>
+      <ThemeConsumer>
+        {({ theme }) => (
+          <div
+            className={item.status ? "item completed" : "item"}
+            style={{ color: theme.textColor, background: theme.secondary }}
+          >
+            <Checkbox
+              checked={item.status}
+              onChangeHandler={onChangeStatusHandler}
+              onClickHandler={() => onClickHandler(item)}
+            />
+            <div className="item-name">{item.name}</div>
 
-        <div className="side-menu">
-          <Button name="Edit" onClick={() => handleEditTodo(item)} />
-          <Button name="Delete" onClick={() => handleDelete(item)} />
-        </div>
-      </div>
+            <div className="side-menu">
+              <Button name="Edit" onClick={() => handleEditTodo(item)} />
+              <Button name="Delete" onClick={() => handleDelete(item)} />
+            </div>
+          </div>
+        )}
+      </ThemeConsumer>
     );
   }
 }
@@ -39,3 +47,4 @@ Item.propTypes = {
   handleEditTodo: PropTypes.func,
   handleDelete: PropTypes.func,
 };
+Item.contextType = ThemeContext;

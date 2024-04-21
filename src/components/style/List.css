@@ -2,11 +2,16 @@ li {
   display: flex;
   border-bottom: 1px solid #ededed;
 }
+.action-menu {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 5px;
+  border-bottom: 1px solid #ededed;
+}
 .view-menu {
   display: flex;
   gap: 5px;
-  padding: 10px 5px;
-  border-bottom: 1px solid #ededed;
 }
 .item-card {
   display: flex;

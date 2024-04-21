@@ -1,5 +1,6 @@
 import React from "react";
 import "../style/Input.css";
+import { ThemeConsumer, ThemeContext } from "../style/theme";
 export default class Input extends React.Component {
   constructor(props) {
     super(props);
@@ -23,16 +24,26 @@ export default class Input extends React.Component {
   render() {
     const { placeholder, inputRef } = this.props;
     const { input } = this.state;
+    const { theme } = this.context;
     return (
-      <form onSubmit={this.handleSubmit}>
-        <input
-          type="text"
-          value={input}
-          onChange={this.handleInputChange}
-          placeholder={placeholder}
-          ref={inputRef}
-        ></input>
-      </form>
+      <ThemeConsumer>
+        {({ theme }) => (
+          <form onSubmit={this.handleSubmit}>
+            <input
+              type="text"
+              value={input}
+              onChange={this.handleInputChange}
+              placeholder={placeholder}
+              ref={inputRef}
+              style={{
+                backgroundColor: theme.secondary,
+                color: theme.textColor,
+              }}
+            ></input>
+          </form>
+        )}
+      </ThemeConsumer>
     );
   }
 }
+Input.contextType = ThemeContext;
