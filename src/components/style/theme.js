@@ -35,28 +35,4 @@ const ThemeChanger = (props) => {
     <ThemeProvider value={{ theme, changeTheme }}>{children}</ThemeProvider>
   );
 };
-/* class ThemeChanger extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      theme: THEME.LIGHT,
-    };
-  }
-  changeTheme = () => {
-    this.setState((prevState) => {
-      return {
-        theme: prevState.theme === THEME.LIGHT ? THEME.DARK : THEME.LIGHT,
-      };
-    });
-  };
-  render() {
-    const { children } = this.props;
-    const { theme } = this.state;
-    return (
-      <ThemeProvider value={{ theme, changeTheme: this.changeTheme }}>
-        {children}
-      </ThemeProvider>
-    );
-  }
-} */
 export { THEME, ThemeContext, ThemeConsumer, ThemeProvider, ThemeChanger };
