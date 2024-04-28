@@ -10,8 +10,15 @@ form > input {
   font-style: italic;
   border: 0px solid #e6e6e6;
   box-shadow: inset 0 -2px 1px rgba(0, 0, 0, 0.03);
+  transition: all 0.5s ease;
 }
 form > input:focus {
   outline: none;
   box-shadow: 1px 1px 8px 3px rgba(184, 63, 69, 0.71);
+}
+form > .dark-input {
+  color: #ffffff;
+}
+form > .dark-input:focus {
+  box-shadow: 1px 1px 8px 3px rgba(118, 171, 174, 0.71);
 }

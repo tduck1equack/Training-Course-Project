@@ -4,10 +4,18 @@ button {
   padding: 3px 7px;
   font-size: 15px;
   border-radius: 3px;
+  transition: all 0.5s ease;
 }
 button:hover {
   outline: 1px solid #ce4646;
   cursor: pointer;
+}
+.dark-button {
+  background-color: #9db2bf;
+  color: #344955;
+}
+.dark-button:hover {
+  outline: 1px solid #76abae;
 }
 .secondary,
 .secondary:hover {

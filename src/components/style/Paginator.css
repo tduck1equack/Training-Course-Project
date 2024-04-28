@@ -1,11 +1,21 @@
 .paginator {
   padding: 10px 0px;
+  transition: all 0.5s ease;
+}
+.dark-paginator {
+  transition: all 0.5s ease;
+  background-color: #222831;
 }
 .paginator .button-list {
+  background-color: inherit;
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 3%;
+}
+.paginator .button-list,
+.dark-paginator .button-list {
+  transition: all 0.5s ease;
 }
 .paginator .button-list li {
   border: none;

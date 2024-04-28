@@ -1,20 +1,18 @@
-import React from "react";
+import React, { useState } from "react";
 
 const THEME = {
-  LIGHT: {
-    background: "#f5f5f5",
+  LIGHT: "light",
+  /* background: "#f5f5f5",
     secondary: "#fff",
     button: "#fff",
     textColor: "#000000",
-    header: "#b83f45",
-  },
-  DARK: {
-    background: "#31363f",
+    header: "#b83f45", */
+  DARK: "dark",
+  /* background: "#31363f",
     secondary: "#222831",
     button: "#76abae",
     textColor: "#ffffff",
-    header: "#ffffff",
-  },
+    header: "#ffffff", */
 };
 
 const ThemeContext = React.createContext({
@@ -25,7 +23,19 @@ const ThemeContext = React.createContext({
 const ThemeConsumer = ThemeContext.Consumer;
 const ThemeProvider = ThemeContext.Provider;
 
-class ThemeChanger extends React.Component {
+const ThemeChanger = (props) => {
+  const [theme, setTheme] = useState(THEME.LIGHT);
+  const { children } = props;
+  const changeTheme = () => {
+    setTheme(theme === THEME.LIGHT ? THEME.DARK : THEME.LIGHT);
+    document.body.style.backgroundColor =
+      theme === THEME.LIGHT ? "#31363f" : "#f5f5f5";
+  };
+  return (
+    <ThemeProvider value={{ theme, changeTheme }}>{children}</ThemeProvider>
+  );
+};
+/* class ThemeChanger extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -48,5 +58,5 @@ class ThemeChanger extends React.Component {
       </ThemeProvider>
     );
   }
-}
+} */
 export { THEME, ThemeContext, ThemeConsumer, ThemeProvider, ThemeChanger };

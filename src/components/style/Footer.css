@@ -8,10 +8,28 @@ p {
 .footer {
   margin-top: 65px;
 }
-.footer p a {
+
+.footer .text a {
   text-decoration: none;
   color: #4d4d4d;
 }
-.footer p a:hover {
+.footer .text a:hover {
   text-decoration: underline;
+  transition: all 0.5s ease;
+}
+.dark,
+.footer .text,
+.footer .text a,
+.footer .text a:hover {
+  transition: all 0.5s ease;
+}
+.dark,
+.dark a,
+.dark a:hover {
+  color: #ffffff;
+  transition: all 0.5s ease;
+}
+
+.dark a {
+  text-decoration: none;
 }

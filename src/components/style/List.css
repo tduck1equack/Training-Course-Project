@@ -2,6 +2,13 @@ li {
   display: flex;
   border-bottom: 1px solid #ededed;
 }
+.dark-list,
+.list {
+  transition: all 0.5s ease;
+}
+.dark-list {
+  background-color: #222831;
+}
 .action-menu {
   display: flex;
   justify-content: space-between;
