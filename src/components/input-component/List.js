@@ -1,10 +1,10 @@
-import React, { useContext, useRef, useState } from "react";
+import React, { useRef, useState, useContext } from "react";
 import Item from "./Item";
 import Paginator from "./Paginator";
 import Button from "../menu-component/Button";
 import "../style/List.css";
 import { FILTER } from "../Main";
-import { THEME, ThemeConsumer } from "../style/theme";
+import { THEME, ThemeContext } from "../style/theme";
 export const VIEWMODE = {
   PAGES: "pages",
   SCROLL: "scroll",
@@ -13,6 +13,7 @@ export const List = (props) => {
   const [viewMode, setViewMode] = useState(VIEWMODE.PAGES);
   const [visible, setVisible] = useState(1);
   const viewRef = useRef();
+  const { theme, changeTheme } = useContext(ThemeContext);
   const {
     list,
     filter,
@@ -71,62 +72,56 @@ export const List = (props) => {
       break;
   }
   return (
-    <ThemeConsumer>
-      {({ theme, changeTheme }) => (
-        <div className={`list ${theme === THEME.LIGHT ? "" : "dark-list"}`}>
-          <div className="action-menu">
-            <div className="view-menu">
-              <Button
-                name="Page view"
-                onClick={() => handleViewMode(VIEWMODE.PAGES)}
-              />
-              <Button
-                name="Scroll view"
-                onClick={() => {
-                  handleViewMode(VIEWMODE.SCROLL);
-                }}
-              />
-            </div>
-            <Button
-              name={theme === THEME.LIGHT ? "Dark" : "Light"}
-              onClick={changeTheme}
-            />
-          </div>
-          <ul
-            ref={viewRef}
-            style={
-              viewMode === VIEWMODE.SCROLL
-                ? { height: 200, overflow: "auto" }
-                : {}
-            }
-            onScroll={handleScroll}
-          >
-            {view.map((item) => {
-              return (
-                <li key={item.id}>
-                  <Item
-                    item={item}
-                    onClickHandler={statusHandler}
-                    onChangeStatusHandler={countHandler}
-                    handleEditTodo={editTodoHandler}
-                    handleDelete={deleteHandler}
-                  />
-                </li>
-              );
-            })}
-            {pageNumbers > 1 && viewMode === VIEWMODE.PAGES ? (
-              <Paginator
-                pageNumbers={pageNumbers}
-                onClick={handlePageChange}
-                pageIndex={visible}
-              />
-            ) : (
-              ""
-            )}
-          </ul>
+    <div className={`list ${theme === THEME.LIGHT ? "" : "dark-list"}`}>
+      <div className="action-menu">
+        <div className="view-menu">
+          <Button
+            name="Page view"
+            onClick={() => handleViewMode(VIEWMODE.PAGES)}
+          />
+          <Button
+            name="Scroll view"
+            onClick={() => {
+              handleViewMode(VIEWMODE.SCROLL);
+            }}
+          />
         </div>
-      )}
-    </ThemeConsumer>
+        <Button
+          name={theme === THEME.LIGHT ? "Dark" : "Light"}
+          onClick={changeTheme}
+        />
+      </div>
+      <ul
+        ref={viewRef}
+        style={
+          viewMode === VIEWMODE.SCROLL ? { height: 200, overflow: "auto" } : {}
+        }
+        onScroll={handleScroll}
+      >
+        {view.map((item) => {
+          return (
+            <li key={item.id}>
+              <Item
+                item={item}
+                onClickHandler={statusHandler}
+                onChangeStatusHandler={countHandler}
+                handleEditTodo={editTodoHandler}
+                handleDelete={deleteHandler}
+              />
+            </li>
+          );
+        })}
+        {pageNumbers > 1 && viewMode === VIEWMODE.PAGES ? (
+          <Paginator
+            pageNumbers={pageNumbers}
+            onClick={handlePageChange}
+            pageIndex={visible}
+          />
+        ) : (
+          ""
+        )}
+      </ul>
+    </div>
   );
 };
 export default List;

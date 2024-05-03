@@ -1,11 +1,11 @@
-import React, { useRef, useState } from "react";
+import React, { useContext, useRef, useState } from "react";
 import { produce } from "immer";
 import Input from "./input-component/Input";
 import ArrowDown from "./input-component/ArrowDown";
 import List from "./input-component/List";
 import Menu from "./input-component/Menu";
 import "./style/Main.css";
-import { THEME, ThemeConsumer } from "./style/theme";
+import { THEME, ThemeContext } from "./style/theme";
 const FILTER = {
   ALL: "all",
   ACTIVE: "active",
@@ -15,16 +15,19 @@ const Main = () => {
   const [todoList, setTodoList] = useState([]);
   const [filter, setFilter] = useState(FILTER.ALL);
   const inputRef = useRef(null);
+  const { theme } = useContext(ThemeContext);
 
-  let editId = null;
+  let editId = useRef(null);
   let count = todoList.filter((i) => !i.status).length;
 
   const addEditToList = (item) => {
-    if (editId) {
+    if (editId.current) {
       setTodoList(
-        todoList.map((i) => (i.id === editId ? { ...i, name: item } : i))
+        todoList.map((i) =>
+          i.id === editId.current ? { ...i, name: item } : i
+        )
       );
-      editId = null;
+      editId.current = null;
     } else {
       if (item.length > 1) {
         setTodoList(
@@ -58,7 +61,7 @@ const Main = () => {
   const handleEditRequest = (item) => {
     inputRef.current.focus();
     inputRef.current.value = item.name;
-    editId = item.id;
+    editId.current = item.id;
   };
   const clearCompleted = (e) => {
     setTodoList(todoList.filter((i) => !i.status));
@@ -67,38 +70,33 @@ const Main = () => {
     setFilter(filter);
   };
   return (
-    <ThemeConsumer>
-      {({ theme }) => (
-        <div
-          className={`input-wrapper ${
-            theme === THEME.LIGHT ? "" : "dark-wrapper"
-          }`}
-        >
-          <Input
-            onSubmit={addEditToList}
-            placeholder="What needs to be done?"
-            inputRef={inputRef}
-          />
-          <ArrowDown onClick={toggleCompleted} />
-          <List
-            list={todoList}
-            filter={filter}
-            statusHandler={handleChangeStatus}
-            editTodoHandler={handleEditRequest}
-            deleteHandler={handleDelete}
-          />
-          {todoList.length ? (
-            <Menu
-              count={count}
-              handleFilter={handleFilter}
-              clearHandler={clearCompleted}
-            />
-          ) : (
-            ""
-          )}
-        </div>
+    <div
+      className={`input-wrapper ${theme === THEME.LIGHT ? "" : "dark-wrapper"}`}
+    >
+      <button onClick={() => console.log(todoList)}> view list</button>
+      <Input
+        onSubmit={addEditToList}
+        placeholder="What needs to be done?"
+        inputRef={inputRef}
+      />
+      <ArrowDown onClick={toggleCompleted} />
+      <List
+        list={todoList}
+        filter={filter}
+        statusHandler={handleChangeStatus}
+        editTodoHandler={handleEditRequest}
+        deleteHandler={handleDelete}
+      />
+      {todoList.length ? (
+        <Menu
+          count={count}
+          handleFilter={handleFilter}
+          clearHandler={clearCompleted}
+        />
+      ) : (
+        ""
       )}
-    </ThemeConsumer>
+    </div>
   );
 };
 export { Main, FILTER };
