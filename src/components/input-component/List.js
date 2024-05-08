@@ -1,15 +1,21 @@
-import React, { useRef, useState, useContext } from "react";
-import Item from "./Item";
+import React, { useRef, useState, useContext, lazy, Suspense } from "react";
+// import Item from "./Item";
 import Paginator from "./Paginator";
 import Button from "../menu-component/Button";
-import "../style/List.css";
-import { FILTER } from "../Main";
+import { FILTER, delaySimulation } from "../Main";
 import { THEME, ThemeContext } from "../style/theme";
-export const VIEWMODE = {
+import ErrorBoundaries from "../miscellaneous/ErrorBoundaries";
+
+import "../style/List.css";
+import { Loading } from "../miscellaneous/Loading";
+
+const Item = lazy(() => delaySimulation(import("./Item")));
+
+const VIEWMODE = {
   PAGES: "pages",
   SCROLL: "scroll",
 };
-export const List = (props) => {
+const List = (props) => {
   const [viewMode, setViewMode] = useState(VIEWMODE.PAGES);
   const [visible, setVisible] = useState(1);
   const viewRef = useRef();
@@ -23,6 +29,8 @@ export const List = (props) => {
     deleteHandler,
   } = props;
   let [view, itemPerPage, pageNumbers] = [list, 5, null];
+
+  console.log(`Component: List`);
 
   const handleViewMode = (viewMode) => {
     setViewMode(viewMode);
@@ -101,13 +109,17 @@ export const List = (props) => {
         {view.map((item) => {
           return (
             <li key={item.id}>
-              <Item
-                item={item}
-                onClickHandler={statusHandler}
-                onChangeStatusHandler={countHandler}
-                handleEditTodo={editTodoHandler}
-                handleDelete={deleteHandler}
-              />
+              <ErrorBoundaries fallback={<p>Something went wrong...</p>}>
+                <Suspense fallback={<p>Loadding...</p>}>
+                  <Item
+                    item={item}
+                    onClickHandler={statusHandler}
+                    onChangeStatusHandler={countHandler}
+                    handleEditTodo={editTodoHandler}
+                    handleDelete={deleteHandler}
+                  />
+                </Suspense>
+              </ErrorBoundaries>
             </li>
           );
         })}

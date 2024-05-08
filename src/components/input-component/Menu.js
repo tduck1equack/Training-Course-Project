@@ -9,6 +9,8 @@ const Menu = (props) => {
 
   const { count, clearHandler, handleFilter } = props;
 
+  console.log(`Component: Menu`);
+
   return (
     <div className="menu">
       <span className={theme === THEME.LIGHT ? "" : "dark-count"}>

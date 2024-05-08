@@ -1,10 +1,14 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
+
 import "../style/Input.css";
 import { THEME, ThemeContext } from "../style/theme";
+
 const Input = (props) => {
   const [value, setValue] = useState("");
-  const { placeholder, inputRef, onSubmit } = props;
+  const { placeholder, inputRef, editRef, onSubmit } = props;
   const { theme } = useContext(ThemeContext);
+
+  console.log(`Component: Input`);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -15,6 +19,7 @@ const Input = (props) => {
     console.log(e.target.value);
     setValue(e.target.value);
   };
+  useEffect(() => inputRef.current.focus(), []);
   return (
     <form onSubmit={handleSubmit}>
       <input

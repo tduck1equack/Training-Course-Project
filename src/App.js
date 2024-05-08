@@ -1,21 +1,15 @@
-import React, { useContext } from "react";
+import React from "react";
 import Header from "./components/Header";
 import { Main } from "./components/Main";
 import Footer from "./components/Footer";
-import { ThemeConsumer, ThemeContext } from "./components/style/theme";
 import "./App.css";
 const App = () => {
-  const theme = useContext(ThemeContext);
   return (
-    <ThemeConsumer>
-      {({ theme }) => (
-        <div className="margin-container">
-          <Header />
-          <Main />
-          <Footer />
-        </div>
-      )}
-    </ThemeConsumer>
+    <div className="margin-container">
+      <Header />
+      <Main />
+      <Footer />
+    </div>
   );
 };
 export default App;
