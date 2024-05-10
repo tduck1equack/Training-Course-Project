@@ -110,7 +110,7 @@ const List = (props) => {
           return (
             <li key={item.id}>
               <ErrorBoundaries fallback={<p>Something went wrong...</p>}>
-                <Suspense fallback={<p>Loadding...</p>}>
+                <Suspense fallback={<Loading />}>
                   <Item
                     item={item}
                     onClickHandler={statusHandler}

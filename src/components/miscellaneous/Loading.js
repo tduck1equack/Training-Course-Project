@@ -1,5 +1,5 @@
 import React from "react";
 
 export const Loading = () => {
-  return <h1>Loading component...</h1>;
+  return <h3>Loading component...</h3>;
 };
