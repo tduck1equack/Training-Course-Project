@@ -9,8 +9,6 @@ const Paginator = (props) => {
   const { pageNumbers, onClick, pageIndex } = props;
   const pageNumbersArray = [...Array(pageNumbers + 1).keys()].slice(1);
 
-  console.log(`Component: Paginator`);
-
   return (
     <div
       className={`paginator ${theme === THEME.LIGHT ? "" : "dark-paginator"}`}

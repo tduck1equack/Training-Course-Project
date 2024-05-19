@@ -1,23 +1,31 @@
-import React, { useRef, useState, useContext, lazy, Suspense } from "react";
-// import Item from "./Item";
+import React, {
+  useRef,
+  useState,
+  useContext,
+  lazy,
+  Suspense,
+  useCallback,
+} from "react";
+import { store, ACTION_TYPE } from "../store/store";
+import Item from "./Item";
 import Paginator from "./Paginator";
 import Button from "../menu-component/Button";
-import { FILTER, delaySimulation } from "../Main";
+import { delaySimulation, FILTER } from "../Main";
 import { THEME, ThemeContext } from "../style/theme";
 import ErrorBoundaries from "../miscellaneous/ErrorBoundaries";
 
 import "../style/List.css";
 import { Loading } from "../miscellaneous/Loading";
 
-const Item = lazy(() => delaySimulation(import("./Item")));
-
 const VIEWMODE = {
-  PAGES: "pages",
+  PAGE: "page",
   SCROLL: "scroll",
 };
+
 const List = (props) => {
-  const [viewMode, setViewMode] = useState(VIEWMODE.PAGES);
+  // const [viewMode, setViewMode] = useState(VIEWMODE.PAGES);
   const [visible, setVisible] = useState(1);
+  const [viewMode, setViewMode] = useState(VIEWMODE.PAGE);
   const viewRef = useRef();
   const { theme, changeTheme } = useContext(ThemeContext);
   const {
@@ -28,17 +36,19 @@ const List = (props) => {
     editTodoHandler,
     deleteHandler,
   } = props;
+
   let [view, itemPerPage, pageNumbers] = [list, 5, null];
 
-  console.log(`Component: List`);
-
-  const handleViewMode = (viewMode) => {
-    setViewMode(viewMode);
-    setVisible(1);
-    console.log(viewMode);
-    viewRef.current.scrollTop = 0;
-  };
-  const handleScroll = () => {
+  const handleViewMode = useCallback(
+    (viewMode) => {
+      setViewMode(viewMode);
+      setVisible(1);
+      console.log(viewMode);
+      viewRef.current.scrollTop = 0;
+    },
+    [visible]
+  );
+  const handleScroll = useCallback(() => {
     const visibleInstances = Math.ceil(list.length / 5);
     if (
       Math.ceil(viewRef.current.scrollTop) ===
@@ -47,7 +57,7 @@ const List = (props) => {
       setVisible(visible < visibleInstances ? visible + 1 : visible);
       console.log(visible);
     }
-  };
+  }, [list.length, visible]);
 
   const handlePageChange = (num) => {
     setVisible(num);
@@ -67,7 +77,7 @@ const List = (props) => {
   }
   pageNumbers = Math.ceil(view.length / 5);
   switch (viewMode) {
-    case VIEWMODE.PAGES:
+    case VIEWMODE.PAGE:
       view = view.slice(
         visible * itemPerPage - itemPerPage,
         visible * itemPerPage
@@ -123,7 +133,7 @@ const List = (props) => {
             </li>
           );
         })}
-        {pageNumbers > 1 && viewMode === VIEWMODE.PAGES ? (
+        {pageNumbers > 1 && viewMode === VIEWMODE.PAGE ? (
           <Paginator
             pageNumbers={pageNumbers}
             onClick={handlePageChange}

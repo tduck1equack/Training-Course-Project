@@ -2,13 +2,18 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import reportWebVitals from "./reportWebVitals";
 import App from "./App";
-import "./index.css";
+import { Provider } from "react-redux";
 import { ThemeChanger } from "./components/style/theme";
+import { store } from "./components/store/store";
+
+import "./index.css";
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
-  <ThemeChanger>
-    <App />
-  </ThemeChanger>
+  <Provider store={store}>
+    <ThemeChanger>
+      <App />
+    </ThemeChanger>
+  </Provider>
 );
 
 // If you want to start measuring performance in your app, pass a function

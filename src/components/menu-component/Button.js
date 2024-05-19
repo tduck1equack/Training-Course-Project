@@ -6,8 +6,6 @@ const Button = (props) => {
   const { theme } = useContext(ThemeContext);
   const { name, onClick, special } = props;
 
-  console.log(`Component: ${name} button`);
-
   return (
     <button
       onClick={onClick}

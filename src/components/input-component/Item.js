@@ -14,8 +14,6 @@ const Item = (props) => {
     handleDelete,
   } = props;
 
-  console.log(`Component: Item number ${item.id}`);
-
   return (
     <div className={`item ${theme === THEME.LIGHT ? "" : "dark-item"}`}>
       <Checkbox

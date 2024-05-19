@@ -8,8 +8,6 @@ const Input = (props) => {
   const { placeholder, inputRef, editRef, onSubmit } = props;
   const { theme } = useContext(ThemeContext);
 
-  console.log(`Component: Input`);
-
   const handleSubmit = (e) => {
     e.preventDefault();
     onSubmit(value);
