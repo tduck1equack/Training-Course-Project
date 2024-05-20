@@ -3,23 +3,21 @@ import Checkbox from "./Checkbox";
 import Button from "../menu-component/Button";
 import "../style/Item.css";
 import { THEME, ThemeContext } from "../style/theme";
+import { useDispatch } from "react-redux";
+import { changeTodoStatus, removeTodo } from "../store/todoListActions";
 const Item = (props) => {
+  const todoDispatch = useDispatch();
+
   const { theme } = useContext(ThemeContext);
 
-  const {
-    item,
-    onClickHandler,
-    onChangeStatusHandler,
-    handleEditTodo,
-    handleDelete,
-  } = props;
+  const { item, onChangeStatusHandler, handleEditTodo } = props;
 
   return (
     <div className={`item ${theme === THEME.LIGHT ? "" : "dark-item"}`}>
       <Checkbox
         checked={item.status}
         onChangeHandler={onChangeStatusHandler}
-        onClickHandler={() => onClickHandler(item)}
+        onClickHandler={() => todoDispatch(changeTodoStatus(item))}
       />
       <div className={`item-name ${item.status ? "completed" : ""}`}>
         {item.name}
@@ -27,7 +25,7 @@ const Item = (props) => {
 
       <div className="side-menu">
         <Button name="Edit" onClick={() => handleEditTodo(item)} />
-        <Button name="Delete" onClick={() => handleDelete(item)} />
+        <Button name="Delete" onClick={() => todoDispatch(removeTodo(item))} />
       </div>
     </div>
   );

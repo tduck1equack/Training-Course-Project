@@ -1,5 +1,4 @@
-import { produce } from "immer";
-import { ACTION_TYPE } from "./store";
+import { ACTION_TYPE } from "./todoReducer";
 
 export const addTodo = (name) => {
   return {
@@ -8,10 +7,10 @@ export const addTodo = (name) => {
   };
 };
 
-export const editTodo = (name, id) => {
+export const editTodo = (name) => {
   return {
     type: ACTION_TYPE.EDIT_TODO,
-    payload: { name, id },
+    payload: name,
   };
 };
 
@@ -39,5 +38,12 @@ export const toggleStatusAll = (event) => {
   return {
     type: ACTION_TYPE.TOGGLE_STATUS_ALL,
     payload: event,
+  };
+};
+
+export const getEditId = (todo) => {
+  return {
+    type: ACTION_TYPE.GET_EDIT_ID,
+    payload: todo,
   };
 };

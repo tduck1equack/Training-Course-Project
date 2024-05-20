@@ -1,8 +1,3 @@
-import React from "react";
-import { produce } from "immer";
-import { createStore } from "redux";
-import { addTodo } from "./todoListActions";
-
 const ACTION_TYPE = {
   ADD_TODO: "todoList/addTodo",
   EDIT_TODO: "todoList/editTodo",
@@ -10,26 +5,12 @@ const ACTION_TYPE = {
   REMOVE_TODO_COMPLETED: "todoList/removeTodoCompleted",
   CHANGE_TODO_STATUS: "todoList/changeStatus",
   TOGGLE_STATUS_ALL: "todoList/toggleStatusAll",
+  GET_EDIT_ID: "todoList/getEditId",
 };
 
-const initialStore = {
-  todoList: [],
-};
-/*
-Payload example:
-
-payload = {
-    name: string,
-    todo: object,
-    id: number,
-    event: event
-    filter: FILTER.<string>
-    viewMode: VIEWMODE.<string>
-}
-*/
-const rootReducer = (state, action) => {
+const todoReducer = (state, action) => {
   const { type, payload } = action;
-  const { todoList } = state;
+  const { todoList, editId } = state;
   switch (type) {
     case ACTION_TYPE.ADD_TODO:
       return {
@@ -43,7 +24,7 @@ const rootReducer = (state, action) => {
       return {
         ...state,
         todoList: todoList.map((i) =>
-          i.id === payload.id ? { ...i, name: payload.name } : i
+          i.id === editId ? { ...i, name: payload } : i
         ),
       };
     case ACTION_TYPE.REMOVE_TODO:
@@ -70,10 +51,14 @@ const rootReducer = (state, action) => {
           return { ...i, status: payload.target.checked };
         }),
       };
+    case ACTION_TYPE.GET_EDIT_ID:
+      return {
+        ...state,
+        editId: payload.id,
+      };
     default:
       return state;
   }
 };
-const store = createStore(rootReducer, initialStore);
 
-export { store, ACTION_TYPE };
+export { todoReducer, ACTION_TYPE };

@@ -2,22 +2,33 @@ import React, { useContext, useEffect, useState } from "react";
 
 import "../style/Input.css";
 import { THEME, ThemeContext } from "../style/theme";
+import { useDispatch, useSelector } from "react-redux";
+import { addTodo, editTodo, getEditId } from "../store/todoListActions";
 
 const Input = (props) => {
   const [value, setValue] = useState("");
-  const { placeholder, inputRef, editRef, onSubmit } = props;
+  const todoDispatch = useDispatch();
+  const editId = useSelector((state) => state.editId);
+  const { placeholder, inputRef } = props;
+
   const { theme } = useContext(ThemeContext);
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    onSubmit(value);
+    if (editId) {
+      todoDispatch(editTodo(value));
+      todoDispatch(getEditId({ id: null }));
+    } else {
+      todoDispatch(addTodo(value));
+    }
     setValue("");
   };
   const handleInputChange = (e) => {
-    console.log(e.target.value);
     setValue(e.target.value);
   };
+
   useEffect(() => inputRef.current.focus(), []);
+
   return (
     <form onSubmit={handleSubmit}>
       <input

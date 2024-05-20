@@ -6,7 +6,6 @@ import React, {
   Suspense,
   useCallback,
 } from "react";
-import { store, ACTION_TYPE } from "../store/store";
 import Item from "./Item";
 import Paginator from "./Paginator";
 import Button from "../menu-component/Button";
@@ -28,14 +27,7 @@ const List = (props) => {
   const [viewMode, setViewMode] = useState(VIEWMODE.PAGE);
   const viewRef = useRef();
   const { theme, changeTheme } = useContext(ThemeContext);
-  const {
-    list,
-    filter,
-    countHandler,
-    statusHandler,
-    editTodoHandler,
-    deleteHandler,
-  } = props;
+  const { list, filter, editTodoHandler } = props;
 
   let [view, itemPerPage, pageNumbers] = [list, 5, null];
 
@@ -59,9 +51,9 @@ const List = (props) => {
     }
   }, [list.length, visible]);
 
-  const handlePageChange = (num) => {
+  const handlePageChange = useCallback((num) => {
     setVisible(num);
-  };
+  }, []);
   switch (filter) {
     case FILTER.ALL:
       view = list;
@@ -121,13 +113,7 @@ const List = (props) => {
             <li key={item.id}>
               <ErrorBoundaries fallback={<p>Something went wrong...</p>}>
                 <Suspense fallback={<Loading />}>
-                  <Item
-                    item={item}
-                    onClickHandler={statusHandler}
-                    onChangeStatusHandler={countHandler}
-                    handleEditTodo={editTodoHandler}
-                    handleDelete={deleteHandler}
-                  />
+                  <Item item={item} handleEditTodo={editTodoHandler} />
                 </Suspense>
               </ErrorBoundaries>
             </li>

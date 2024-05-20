@@ -4,12 +4,10 @@ import React, {
   useCallback,
   useContext,
   useEffect,
-  useReducer,
   useRef,
   useState,
 } from "react";
 import { produce } from "immer";
-import { store, ACTION_TYPE } from "./store/store";
 
 // import child components
 // import Input from "./input-component/Input";
@@ -22,15 +20,8 @@ import { Loading } from "./miscellaneous/Loading";
 import "./style/Main.css";
 
 import { THEME, ThemeContext } from "./style/theme";
-import { useSelector } from "react-redux";
-import {
-  addTodo,
-  changeTodoStatus,
-  editTodo,
-  removeCompletedTodo,
-  removeTodo,
-  toggleStatusAll,
-} from "./store/todoListActions";
+import { useDispatch, useSelector } from "react-redux";
+import { getEditId, toggleStatusAll } from "./store/todoListActions";
 // dynamic import
 const Input = lazy(() => delaySimulation(import("./input-component/Input")));
 const ArrowDown = lazy(() =>
@@ -53,50 +44,30 @@ const FILTER = {
 // actual Main component
 const Main = () => {
   const todoList = useSelector((state) => state.todoList);
+  const editId = useSelector((state) => state.editId);
+  const todoDispatch = useDispatch();
 
   const [filter, setFilter] = useState(FILTER.ALL);
   const inputRef = useRef(null);
-  const editRef = useRef(null);
   const { theme } = useContext(ThemeContext);
 
-  // const { todoList } = store.getState();
-
-  let editId = useRef(null);
   let count = todoList.filter((i) => !i.status).length;
 
-  const stopStoreListening = store.subscribe(() => {
-    console.log("Store after dispatch: ", store.getState());
-  });
+  const toggleCompleted = useCallback(
+    (e) => {
+      todoDispatch(toggleStatusAll(e));
+    },
+    [todoList]
+  );
 
-  const addEditToList = useCallback((item) => {
-    if (editId.current) {
-      store.dispatch(editTodo(item, editId.current));
-      editId.current = null;
-    } else {
-      if (item.length > 1) {
-        store.dispatch(addTodo(item));
-        console.log(todoList);
-      }
-    }
-  }, []);
-  const toggleCompleted = useCallback((e) => {
-    store.dispatch(toggleStatusAll(e));
-    console.log("Toggled!");
-  }, []);
-  const handleDelete = (item) => {
-    store.dispatch(removeTodo(item));
-  };
-  const handleChangeStatus = (item) => {
-    store.dispatch(changeTodoStatus(item));
-  };
-  const handleEditRequest = (item) => {
-    inputRef.current.focus();
-    inputRef.current.value = item.name;
-    editId.current = item.id;
-  };
-  const clearCompleted = () => {
-    store.dispatch(removeCompletedTodo());
-  };
+  const handleEditRequest = useCallback(
+    (item) => {
+      inputRef.current.focus();
+      inputRef.current.value = item.name;
+      todoDispatch(getEditId(item));
+    },
+    [todoList]
+  );
   const handleFilter = useCallback((filter) => {
     setFilter(filter);
   }, []);
@@ -113,26 +84,19 @@ const Main = () => {
     >
       <Suspense fallback={<Loading />}>
         <Input
-          onSubmit={addEditToList}
+          editId={editId}
           placeholder="What needs to be done?"
           inputRef={inputRef}
-          editRef={editRef}
         />
         <ArrowDown onClick={toggleCompleted} />
       </Suspense>
       <List
         list={todoList}
         filter={filter}
-        statusHandler={handleChangeStatus}
         editTodoHandler={handleEditRequest}
-        deleteHandler={handleDelete}
       />
       {todoList.length !== 0 ? (
-        <Menu
-          count={count}
-          handleFilter={handleFilter}
-          clearHandler={clearCompleted}
-        />
+        <Menu count={count} handleFilter={handleFilter} />
       ) : (
         ""
       )}
