@@ -8,7 +8,7 @@ export default class ErrorBoundaries extends React.Component {
     };
   }
   static getDerivedStateFromError(error) {
-    // return this.setState({ isError: true });
+    return this.setState({ isError: true });
   }
   componentDidCatch(error, info) {
     console.log(error, info.componentStack);

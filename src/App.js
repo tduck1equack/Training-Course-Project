@@ -3,11 +3,15 @@ import Header from "./components/Header";
 import { Main } from "./components/Main";
 import Footer from "./components/Footer";
 import "./App.css";
+import ErrorBoundaries from "./components/miscellaneous/ErrorBoundaries";
+import Error from "./components/miscellaneous/Error";
 const App = () => {
   return (
     <div className="margin-container">
       <Header />
+      {/* <ErrorBoundaries fallback={<Error />}> */}
       <Main />
+      {/* </ErrorBoundaries> */}
       <Footer />
     </div>
   );

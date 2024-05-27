@@ -1,20 +1,16 @@
-import React, {
-  useRef,
-  useState,
-  useContext,
-  lazy,
-  Suspense,
-  useCallback,
-} from "react";
+import React, { useRef, useState, useContext, useCallback } from "react";
 import Item from "./Item";
 import Paginator from "./Paginator";
 import Button from "../menu-component/Button";
-import { delaySimulation, FILTER } from "../Main";
+import { FILTER } from "../Main";
 import { THEME, ThemeContext } from "../style/theme";
-import ErrorBoundaries from "../miscellaneous/ErrorBoundaries";
 
 import "../style/List.css";
-import { Loading } from "../miscellaneous/Loading";
+import { useDispatch } from "react-redux";
+import { addTodo, loadTodo } from "../store/todoListActions";
+import axios from "axios";
+
+const endpoint = "https://6652c3c6813d78e6d6d62e09.mockapi.io/todoList";
 
 const VIEWMODE = {
   PAGE: "page",
@@ -22,7 +18,8 @@ const VIEWMODE = {
 };
 
 const List = (props) => {
-  // const [viewMode, setViewMode] = useState(VIEWMODE.PAGES);
+  const todoDispatch = useDispatch();
+
   const [visible, setVisible] = useState(1);
   const [viewMode, setViewMode] = useState(VIEWMODE.PAGE);
   const viewRef = useRef();
@@ -30,6 +27,15 @@ const List = (props) => {
   const { list, filter, editTodoHandler } = props;
 
   let [view, itemPerPage, pageNumbers] = [list, 5, null];
+
+  const loadAPI = () => {
+    axios
+      .get(endpoint)
+      .then((res) => {
+        todoDispatch(loadTodo(res.data));
+      })
+      .catch((err) => console.log(err));
+  };
 
   const handleViewMode = useCallback(
     (viewMode) => {
@@ -85,6 +91,7 @@ const List = (props) => {
     <div className={`list ${theme === THEME.LIGHT ? "" : "dark-list"}`}>
       <div className="action-menu">
         <div className="view-menu">
+          <Button name="Load from MockAPI" onClick={() => loadAPI()} />
           <Button
             name="Page view"
             onClick={() => handleViewMode(VIEWMODE.PAGES)}
@@ -110,12 +117,8 @@ const List = (props) => {
       >
         {view.map((item) => {
           return (
-            <li key={item.id}>
-              <ErrorBoundaries fallback={<p>Something went wrong...</p>}>
-                <Suspense fallback={<Loading />}>
-                  <Item item={item} handleEditTodo={editTodoHandler} />
-                </Suspense>
-              </ErrorBoundaries>
+            <li key={item.name}>
+              <Item item={item} handleEditTodo={editTodoHandler} />
             </li>
           );
         })}

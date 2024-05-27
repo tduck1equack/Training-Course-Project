@@ -3,11 +3,14 @@ import Button from "../menu-component/Button";
 import "../style/Menu.css";
 import { FILTER } from "../Main";
 import { THEME, ThemeContext } from "../style/theme";
+import { useDispatch } from "react-redux";
+import { removeCompletedTodo } from "../store/todoListActions";
 
 const Menu = (props) => {
   const { theme } = useContext(ThemeContext);
+  const todoDispatch = useDispatch();
 
-  const { count, clearHandler, handleFilter } = props;
+  const { count, handleFilter } = props;
 
   return (
     <div className="menu">
@@ -24,7 +27,7 @@ const Menu = (props) => {
           />
         </div>
         <Button
-          onClick={clearHandler}
+          onClick={() => todoDispatch(removeCompletedTodo())}
           name="Clear Completed"
           special="secondary"
         />

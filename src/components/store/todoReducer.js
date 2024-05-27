@@ -1,4 +1,9 @@
+import axios from "axios";
+
+const endpoint = "https://6652c3c6813d78e6d6d62e09.mockapi.io/todoList";
+
 const ACTION_TYPE = {
+  LOAD_TODO: "todoList/addTodo",
   ADD_TODO: "todoList/addTodo",
   EDIT_TODO: "todoList/editTodo",
   REMOVE_TODO: "todoList/removeTodo",
@@ -12,6 +17,11 @@ const todoReducer = (state, action) => {
   const { type, payload } = action;
   const { todoList, editId } = state;
   switch (type) {
+    case ACTION_TYPE.LOAD_TODO:
+      return {
+        ...state,
+        todoList: [...todoList, ...payload],
+      };
     case ACTION_TYPE.ADD_TODO:
       return {
         ...state,

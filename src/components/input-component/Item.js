@@ -10,13 +10,12 @@ const Item = (props) => {
 
   const { theme } = useContext(ThemeContext);
 
-  const { item, onChangeStatusHandler, handleEditTodo } = props;
+  const { item, handleEditTodo } = props;
 
   return (
     <div className={`item ${theme === THEME.LIGHT ? "" : "dark-item"}`}>
       <Checkbox
         checked={item.status}
-        onChangeHandler={onChangeStatusHandler}
         onClickHandler={() => todoDispatch(changeTodoStatus(item))}
       />
       <div className={`item-name ${item.status ? "completed" : ""}`}>

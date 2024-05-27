@@ -22,6 +22,7 @@ import "./style/Main.css";
 import { THEME, ThemeContext } from "./style/theme";
 import { useDispatch, useSelector } from "react-redux";
 import { getEditId, toggleStatusAll } from "./store/todoListActions";
+import axios from "axios";
 // dynamic import
 const Input = lazy(() => delaySimulation(import("./input-component/Input")));
 const ArrowDown = lazy(() =>
@@ -45,6 +46,7 @@ const FILTER = {
 const Main = () => {
   const todoList = useSelector((state) => state.todoList);
   const editId = useSelector((state) => state.editId);
+
   const todoDispatch = useDispatch();
 
   const [filter, setFilter] = useState(FILTER.ALL);
