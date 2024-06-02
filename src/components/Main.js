@@ -21,7 +21,7 @@ import "./style/Main.css";
 
 import { THEME, ThemeContext } from "./style/theme";
 import { useDispatch, useSelector } from "react-redux";
-import { getEditId, toggleStatusAll } from "./store/todoListActions";
+import { getEditId, loadTodo, toggleStatusAll } from "./store/todoListActions";
 import axios from "axios";
 // dynamic import
 const Input = lazy(() => delaySimulation(import("./input-component/Input")));
@@ -53,6 +53,8 @@ const Main = () => {
   const inputRef = useRef(null);
   const { theme } = useContext(ThemeContext);
 
+  const endpoint = "https://6652c3c6813d78e6d6d62e09.mockapi.io/todoList";
+
   let count = todoList.filter((i) => !i.status).length;
 
   const toggleCompleted = useCallback(
@@ -76,10 +78,17 @@ const Main = () => {
 
   useEffect(() => {
     document.title = `${count} todos left!`;
+    axios
+      .get(endpoint)
+      .then((res) => {
+        todoDispatch(loadTodo(res.data));
+        console.log(res.data);
+      })
+      .catch((err) => console.log(err));
     return () => {
       console.log("Destructing Main component");
     };
-  }, [count]);
+  }, []);
   return (
     <div
       className={`input-wrapper ${theme === THEME.LIGHT ? "" : "dark-wrapper"}`}
@@ -90,6 +99,7 @@ const Main = () => {
           placeholder="What needs to be done?"
           inputRef={inputRef}
         />
+        <button onClick={() => console.log(todoList)}>view store list</button>
         <ArrowDown onClick={toggleCompleted} />
       </Suspense>
       <List

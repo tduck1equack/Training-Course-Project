@@ -5,6 +5,7 @@ import { THEME, ThemeContext } from "../style/theme";
 import { useDispatch, useSelector } from "react-redux";
 import { addTodo, editTodo, getEditId } from "../store/todoListActions";
 import axios from "axios";
+import { ACTION_TYPE } from "../store/todoReducer";
 
 const Input = (props) => {
   const [value, setValue] = useState("");
@@ -22,24 +23,29 @@ const Input = (props) => {
   const handleSubmit = (e) => {
     e.preventDefault();
     if (editId) {
+      axios
+        .patch(endpoint + editId, { name: value })
+        .then((res) => console.log(res))
+        .catch((err) => console.log(err));
       todoDispatch(editTodo(value));
       todoDispatch(getEditId({ id: null }));
     } else {
+      todoDispatch(addTodo(value));
+      // todoDispatch({ type: ACTION_TYPE.ADD_TODO, payload: value });
       axios
         .post(endpoint, {
           name: value,
           id: todoList.length + 1,
           status: false,
         })
-        .then((res) => {
-          todoDispatch(addTodo(value));
-        })
+        .then((res) => {})
         .catch((err) => console.log(err));
     }
     setValue("");
   };
   const handleInputChange = (e) => {
     setValue(e.target.value);
+    console.log(value);
   };
 
   useEffect(() => inputRef.current.focus(), []);

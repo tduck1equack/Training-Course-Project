@@ -11,8 +11,8 @@ const initialStore = {
 
 const todoList = createStore(
   todoReducer,
-  initialStore,
-  applyMiddleware(loadAPI)
+  initialStore
+  // applyMiddleware(loadAPI)
 );
 
 export default todoList;

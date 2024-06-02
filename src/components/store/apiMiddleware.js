@@ -16,3 +16,7 @@ export const loadAPI = (store) => (next) => (action) => {
       .catch((err) => console.log("Error! " + err));
   }
 };
+
+export const postAPI = store => next => action => {
+    
+}
