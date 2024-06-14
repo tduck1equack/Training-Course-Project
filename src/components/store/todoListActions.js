@@ -1,9 +1,8 @@
 import { ACTION_TYPE } from "./todoReducer";
 
-export const loadTodo = (data) => {
+export const loadTodo = () => {
   return {
     type: ACTION_TYPE.LOAD_TODO,
-    payload: data,
   };
 };
 

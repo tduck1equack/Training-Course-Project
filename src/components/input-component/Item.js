@@ -6,6 +6,7 @@ import { THEME, ThemeContext } from "../style/theme";
 import { useDispatch } from "react-redux";
 import { changeTodoStatus, removeTodo } from "../store/todoListActions";
 import axios from "axios";
+import { todoAPI } from "../api/axiosIndex";
 const Item = (props) => {
   const todoDispatch = useDispatch();
 
@@ -15,11 +16,11 @@ const Item = (props) => {
   const endpoint = "https://6652c3c6813d78e6d6d62e09.mockapi.io/todoList/";
 
   const handleDelete = (item) => {
-    axios
-      .delete(endpoint + item.id)
+    todoDispatch(removeTodo(item));
+    todoAPI
+      .delete("todoList/" + item.id)
       .then((res) => {
         console.log(res);
-        todoDispatch(removeTodo(item));
         return res;
       })
       .catch((err) => console.log(err));

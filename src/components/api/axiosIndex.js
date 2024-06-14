@@ -1,12 +1,14 @@
 import axios from "axios";
 
-const endpoint = "https://6652c3c6813d78e6d6d62e09.mockapi.io/todoList";
+const endpoint = "https://6652c3c6813d78e6d6d62e09.mockapi.io/";
 
-export const data = axios
-  .get(endpoint)
-  .then((res) => {
-    console.log(res.data);
-    data = res.data;
-    console.log("The data obtained: " + data);
-  })
-  .catch((err) => console.log(err));
+const todoAPI = axios.create({
+  baseURL: endpoint,
+});
+
+const loadTodoAPI = async () => {
+  const response = await todoAPI.get("todoList");
+  return response.data;
+};
+
+export { todoAPI, loadTodoAPI };

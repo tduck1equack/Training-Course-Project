@@ -23,6 +23,7 @@ import { THEME, ThemeContext } from "./style/theme";
 import { useDispatch, useSelector } from "react-redux";
 import { getEditId, loadTodo, toggleStatusAll } from "./store/todoListActions";
 import axios from "axios";
+import { loadTodoAPI, todoAPI } from "./api/axiosIndex";
 // dynamic import
 const Input = lazy(() => delaySimulation(import("./input-component/Input")));
 const ArrowDown = lazy(() =>
@@ -53,7 +54,7 @@ const Main = () => {
   const inputRef = useRef(null);
   const { theme } = useContext(ThemeContext);
 
-  const endpoint = "https://6652c3c6813d78e6d6d62e09.mockapi.io/todoList";
+  // const endpoint = "https://6652c3c6813d78e6d6d62e09.mockapi.io/todoList";
 
   let count = todoList.filter((i) => !i.status).length;
 
@@ -78,13 +79,14 @@ const Main = () => {
 
   useEffect(() => {
     document.title = `${count} todos left!`;
-    axios
-      .get(endpoint)
+
+    todoDispatch(loadTodo());
+    /* todoAPI
+      .get("todoList")
       .then((res) => {
-        todoDispatch(loadTodo(res.data));
         console.log(res.data);
       })
-      .catch((err) => console.log(err));
+      .catch((err) => console.log(err)); */
     return () => {
       console.log("Destructing Main component");
     };

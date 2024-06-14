@@ -1,5 +1,6 @@
 import axios from "axios";
 import { produce } from "immer";
+import { todoAPI } from "../api/axiosIndex";
 
 const endpoint = "https://6652c3c6813d78e6d6d62e09.mockapi.io/todoList";
 
@@ -19,6 +20,7 @@ const todoReducer = (state, action) => {
   const { todoList, editId } = state;
   switch (type) {
     case ACTION_TYPE.LOAD_TODO:
+      
       return {
         ...state,
         todoList: [...todoList, ...payload],
