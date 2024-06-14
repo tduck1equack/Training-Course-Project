@@ -28,15 +28,6 @@ const List = (props) => {
 
   let [view, itemPerPage, pageNumbers] = [list, 5, null];
 
-  const loadAPI = () => {
-    axios
-      .get(endpoint)
-      .then((res) => {
-        todoDispatch(loadTodo(res.data));
-      })
-      .catch((err) => console.log(err));
-  };
-
   const handleViewMode = useCallback(
     (viewMode) => {
       setViewMode(viewMode);
@@ -91,7 +82,6 @@ const List = (props) => {
     <div className={`list ${theme === THEME.LIGHT ? "" : "dark-list"}`}>
       <div className="action-menu">
         <div className="view-menu">
-          <Button name="Load from MockAPI" onClick={() => loadAPI()} />
           <Button
             name="Page view"
             onClick={() => handleViewMode(VIEWMODE.PAGES)}
