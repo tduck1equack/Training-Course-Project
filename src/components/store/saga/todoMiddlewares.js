@@ -29,25 +29,25 @@ function* loadTodoSaga() {
 }
 function* addTodoSaga(todo) {
   try {
-    yield call(addTodoAPI, todo);
     yield put(addTodo(todo));
+    yield call(addTodoAPI, todo);
   } catch (e) {
     console.log(e);
   }
 }
 function* editTodoSaga(id, todo) {
   try {
-    yield call(editTodoAPI, [id, todo]);
     yield put(getEditId(id));
     yield put(editTodo(todo));
+    yield call(editTodoAPI, [id, todo]);
   } catch (e) {
     console.log(e);
   }
 }
 function* deleteTodoSaga(todo) {
   try {
-    yield call(deleteTodoAPI, todo.id);
     yield put(removeTodo(todo));
+    yield call(deleteTodoAPI, todo.id);
   } catch (e) {
     console.log(e);
   }
