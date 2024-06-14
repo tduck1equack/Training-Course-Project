@@ -20,7 +20,6 @@ const todoReducer = (state, action) => {
   const { todoList, editId } = state;
   switch (type) {
     case ACTION_TYPE.LOAD_TODO:
-      
       return {
         ...state,
         todoList: [...todoList, ...payload],
