@@ -1,4 +1,4 @@
-import { call, put, takeEvery } from "redux-saga/effects";
+import { call, put, takeEvery, takeLatest, all } from "redux-saga/effects";
 import {
   addTodo,
   editTodo,
@@ -6,7 +6,6 @@ import {
   loadTodo,
   removeTodo,
 } from "../todoListActions";
-import axios from "axios";
 import { ACTION_TYPE } from "../todoReducer";
 import {
   addTodoAPI,
@@ -48,9 +47,29 @@ function* deleteTodoSaga(todo) {
     console.log(e);
   }
 }
+function* watchLoadTodoSaga() {
+  yield takeLatest(ACTION_TYPE.LOAD_TODO, loadTodoSaga);
+}
+function* watchAddTodoSaga() {
+  yield takeLatest(ACTION_TYPE.ADD_TODO, addTodoSaga);
+}
+function* watchEditTodoSaga() {
+  yield takeLatest(ACTION_TYPE.EDIT_TODO, editTodoSaga);
+}
+function* watchDeleteTodoSaga() {
+  yield takeLatest(ACTION_TYPE.REMOVE_TODO, deleteTodoSaga);
+}
 export function* todoSaga() {
   yield takeEvery(ACTION_TYPE.LOAD_TODO, loadTodoSaga);
   yield takeEvery(ACTION_TYPE.ADD_TODO, addTodoSaga);
   yield takeEvery(ACTION_TYPE.EDIT_TODO, editTodoSaga);
   yield takeEvery(ACTION_TYPE.REMOVE_TODO, deleteTodoSaga);
+}
+export function* rootSaga() {
+  yield all([
+    watchLoadTodoSaga,
+    watchAddTodoSaga,
+    watchEditTodoSaga,
+    watchDeleteTodoSaga,
+  ]);
 }
