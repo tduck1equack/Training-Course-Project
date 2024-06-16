@@ -59,12 +59,12 @@ function* watchEditTodoSaga() {
 function* watchDeleteTodoSaga() {
   yield takeLatest(ACTION_TYPE.REMOVE_TODO, deleteTodoSaga);
 }
-export function* todoSaga() {
+/* export function* todoSaga() {
   yield takeEvery(ACTION_TYPE.LOAD_TODO, loadTodoSaga);
   yield takeEvery(ACTION_TYPE.ADD_TODO, addTodoSaga);
   yield takeEvery(ACTION_TYPE.EDIT_TODO, editTodoSaga);
   yield takeEvery(ACTION_TYPE.REMOVE_TODO, deleteTodoSaga);
-}
+} */
 export function* rootSaga() {
   yield all([
     watchLoadTodoSaga,

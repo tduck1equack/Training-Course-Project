@@ -1,9 +1,9 @@
 import { createStore, applyMiddleware } from "redux";
-import axios from "axios";
+import { combineReducers } from "@reduxjs/toolkit";
 import createSagaMiddleware from "redux-saga";
 
 import { todoReducer } from "./todoReducer";
-import { todoSaga } from "./saga/todoMiddlewares";
+import { rootSaga } from "./saga/todoMiddlewares";
 
 const initialStore = {
   todoList: [],
@@ -12,12 +12,12 @@ const initialStore = {
 
 const sagaMiddleware = createSagaMiddleware();
 
-const todoList = createStore(
+const store = createStore(
   todoReducer,
   initialStore,
   applyMiddleware(sagaMiddleware)
 );
 
-sagaMiddleware.run(todoSaga);
+sagaMiddleware.run(rootSaga);
 
-export default todoList;
+export default store;

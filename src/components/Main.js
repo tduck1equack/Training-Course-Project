@@ -22,8 +22,6 @@ import "./style/Main.css";
 import { THEME, ThemeContext } from "./style/theme";
 import { useDispatch, useSelector } from "react-redux";
 import { getEditId, loadTodo, toggleStatusAll } from "./store/todoListActions";
-import axios from "axios";
-import { loadTodoAPI, todoAPI } from "./api/axiosIndex";
 // dynamic import
 const Input = lazy(() => delaySimulation(import("./input-component/Input")));
 const ArrowDown = lazy(() =>
@@ -53,8 +51,6 @@ const Main = () => {
   const [filter, setFilter] = useState(FILTER.ALL);
   const inputRef = useRef(null);
   const { theme } = useContext(ThemeContext);
-
-  // const endpoint = "https://6652c3c6813d78e6d6d62e09.mockapi.io/todoList";
 
   let count = todoList.filter((i) => !i.status).length;
 

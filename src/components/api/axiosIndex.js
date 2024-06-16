@@ -1,5 +1,5 @@
 import axios from "axios";
-import todoList from "../store/todoList";
+import store from "../store/store";
 const endpoint = "https://6652c3c6813d78e6d6d62e09.mockapi.io/";
 
 const todoAPI = axios.create({
@@ -13,7 +13,7 @@ const loadTodoAPI = async () => {
 const addTodoAPI = async (value) => {
   const response = await todoAPI.post("todoList", {
     name: value,
-    id: todoList.length + 1,
+    id: store.todoList.length + 1,
     status: false,
   });
   return response;

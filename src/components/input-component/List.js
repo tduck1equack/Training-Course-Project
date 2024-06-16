@@ -7,10 +7,6 @@ import { THEME, ThemeContext } from "../style/theme";
 
 import "../style/List.css";
 import { useDispatch } from "react-redux";
-import { addTodo, loadTodo } from "../store/todoListActions";
-import axios from "axios";
-
-const endpoint = "https://6652c3c6813d78e6d6d62e09.mockapi.io/todoList";
 
 const VIEWMODE = {
   PAGE: "page",

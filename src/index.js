@@ -4,12 +4,12 @@ import reportWebVitals from "./reportWebVitals";
 import App from "./App";
 import { Provider } from "react-redux";
 import { ThemeChanger } from "./components/style/theme";
-import todoList from "./components/store/todoList";
+import store from "./components/store/store";
 
 import "./index.css";
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
-  <Provider store={todoList}>
+  <Provider store={store}>
     <ThemeChanger>
       <App />
     </ThemeChanger>
