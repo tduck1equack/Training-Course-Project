@@ -15,9 +15,11 @@ import {
 } from "../../api/axiosIndex";
 
 function* loadTodoSaga() {
+  debugger;
   try {
     const data = yield call(loadTodoAPI);
     yield put(loadTodo(data));
+    debugger;
   } catch (e) {
     console.log("Dumbass! That's a bad middleware");
   }
@@ -48,7 +50,8 @@ function* deleteTodoSaga(todo) {
   }
 }
 function* watchLoadTodoSaga() {
-  yield takeLatest(ACTION_TYPE.LOAD_TODO, loadTodoSaga);
+  debugger;
+  yield takeLatest(ACTION_TYPE.LOAD_TODO.REQUEST, loadTodoSaga);
 }
 function* watchAddTodoSaga() {
   yield takeLatest(ACTION_TYPE.ADD_TODO, addTodoSaga);
@@ -66,10 +69,11 @@ function* watchDeleteTodoSaga() {
   yield takeEvery(ACTION_TYPE.REMOVE_TODO, deleteTodoSaga);
 } */
 export function* rootSaga() {
+  debugger;
   yield all([
-    watchLoadTodoSaga,
-    watchAddTodoSaga,
-    watchEditTodoSaga,
-    watchDeleteTodoSaga,
+    watchLoadTodoSaga(),
+    watchAddTodoSaga(),
+    watchEditTodoSaga(),
+    watchDeleteTodoSaga(),
   ]);
 }

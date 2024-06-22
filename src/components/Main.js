@@ -22,6 +22,7 @@ import "./style/Main.css";
 import { THEME, ThemeContext } from "./style/theme";
 import { useDispatch, useSelector } from "react-redux";
 import { getEditId, loadTodo, toggleStatusAll } from "./store/todoListActions";
+import { ACTION_TYPE } from "./store/todoReducer";
 // dynamic import
 const Input = lazy(() => delaySimulation(import("./input-component/Input")));
 const ArrowDown = lazy(() =>
@@ -76,7 +77,8 @@ const Main = () => {
   useEffect(() => {
     document.title = `${count} todos left!`;
 
-    todoDispatch(loadTodo());
+    todoDispatch({ type: ACTION_TYPE.LOAD_TODO.REQUEST });
+
     /* todoAPI
       .get("todoList")
       .then((res) => {
@@ -86,7 +88,7 @@ const Main = () => {
     return () => {
       console.log("Destructing Main component");
     };
-  }, []);
+  }, [todoDispatch, count]);
   return (
     <div
       className={`input-wrapper ${theme === THEME.LIGHT ? "" : "dark-wrapper"}`}

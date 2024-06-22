@@ -1,5 +1,8 @@
 const ACTION_TYPE = {
-  LOAD_TODO: "todoList/addTodo",
+  LOAD_TODO: {
+    REQUEST: "todoList/loadTodoRequest",
+    SUCCESS: "todoList/loadTodo",
+  },
   ADD_TODO: "todoList/addTodo",
   EDIT_TODO: "todoList/editTodo",
   REMOVE_TODO: "todoList/removeTodo",
@@ -13,7 +16,8 @@ const todoReducer = (state, action) => {
   const { type, payload } = action;
   const { todoList, editId } = state;
   switch (type) {
-    case ACTION_TYPE.LOAD_TODO:
+    case ACTION_TYPE.LOAD_TODO.SUCCESS:
+      debugger;
       return {
         ...state,
         todoList: [...todoList, ...payload],

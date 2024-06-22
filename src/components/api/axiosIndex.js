@@ -8,6 +8,7 @@ const todoAPI = axios.create({
 
 const loadTodoAPI = async () => {
   const response = await todoAPI.get("todoList");
+  debugger;
   return response.data;
 };
 const addTodoAPI = async (value) => {
