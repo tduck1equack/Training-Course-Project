@@ -35,7 +35,6 @@ const todoReducer = (state, action) => {
   const { todoList, editId } = state;
   switch (type) {
     case ACTION_TYPE.LOAD_TODO.SUCCESS:
-      debugger;
       return {
         ...state,
         todoList: [...todoList, ...payload],
@@ -57,6 +56,7 @@ const todoReducer = (state, action) => {
         ),
       };
     case ACTION_TYPE.REMOVE_TODO.SUCCESS:
+      debugger;
       return {
         ...state,
         todoList: todoList.filter((i) => i.id !== payload.id),

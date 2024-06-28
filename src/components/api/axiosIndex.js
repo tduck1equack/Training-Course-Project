@@ -11,7 +11,6 @@ const todoListLength = () => {
 
 const loadTodoAPI = async () => {
   const response = await todoAPI.get("todoList");
-  debugger;
   return response.data;
 };
 const addTodoAPI = async (value) => {
@@ -24,10 +23,12 @@ const addTodoAPI = async (value) => {
 };
 const editTodoAPI = async (id, todo) => {
   const response = await todoAPI.put(`todoList/${id}`, { name: todo });
+  debugger;
   return response;
 };
 const deleteTodoAPI = async (id) => {
   const response = await todoAPI.delete(`todoList/${id}`);
+  debugger;
   return response;
 };
 const deleteCompletedTodoAPI = async () => {};
@@ -35,6 +36,7 @@ const changeTodoStatusAPI = async (item) => {
   const response = await todoAPI.put(`todoList/${item.id}`, {
     status: item.status,
   });
+  debugger;
   return response;
 };
 export {

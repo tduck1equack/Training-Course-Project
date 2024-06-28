@@ -4,7 +4,12 @@ import Button from "../menu-component/Button";
 import "../style/Item.css";
 import { THEME, ThemeContext } from "../style/theme";
 import { useDispatch } from "react-redux";
-import { changeTodoStatus, removeTodo } from "../store/todoListActions";
+import {
+  changeTodoStatus,
+  changeTodoStatusAction,
+  removeTodo,
+  removeTodoAction,
+} from "../store/todoListActions";
 import axios from "axios";
 import { todoAPI } from "../api/axiosIndex";
 import { ACTION_TYPE } from "../store/todoReducer";
@@ -16,7 +21,7 @@ const Item = (props) => {
   const { item, handleEditTodo } = props;
 
   const handleDelete = (item) => {
-    todoDispatch({ type: ACTION_TYPE.REMOVE_TODO.REQUEST });
+    todoDispatch(removeTodoAction(item));
     /* todoAPI
       .delete("todoList/" + item.id)
       .then((res) => {
@@ -30,9 +35,7 @@ const Item = (props) => {
     <div className={`item ${theme === THEME.LIGHT ? "" : "dark-item"}`}>
       <Checkbox
         checked={item.status}
-        onClickHandler={() =>
-          todoDispatch({ type: ACTION_TYPE.CHANGE_TODO_STATUS.REQUEST })
-        }
+        onClickHandler={() => todoDispatch(changeTodoStatusAction(item))}
       />
       <div className={`item-name ${item.status ? "completed" : ""}`}>
         {item.name}

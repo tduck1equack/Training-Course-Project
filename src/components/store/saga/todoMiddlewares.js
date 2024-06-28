@@ -19,11 +19,9 @@ import {
 import store from "../store";
 
 function* loadTodoSaga() {
-  debugger;
   try {
     const data = yield call(loadTodoAPI);
     yield put(loadTodo(data));
-    debugger;
   } catch (e) {
     console.log("Dumbass! That's a bad middleware");
   }
@@ -47,16 +45,17 @@ function* editTodoSaga(action) {
 }
 function* deleteTodoSaga(action) {
   try {
+    debugger;
     yield put(removeTodo(action.payload));
     yield call(deleteTodoAPI, action.payload.id);
   } catch (e) {
     console.log(e);
   }
 }
-function* changeTodoStatusSaga(todo) {
+function* changeTodoStatusSaga(action) {
   try {
-    yield put(changeTodoStatus(todo));
-    yield call(changeTodoStatusAPI, todo.id);
+    yield put(changeTodoStatus(action.payload));
+    yield call(changeTodoStatusAPI, action.payload);
   } catch (e) {
     console.log(e);
   }
@@ -70,7 +69,6 @@ function* deleteCompletedTodoSaga() {
   }
 }
 function* watchLoadTodoSaga() {
-  debugger;
   yield takeLatest(ACTION_TYPE.LOAD_TODO.REQUEST, loadTodoSaga);
 }
 function* watchAddTodoSaga() {
@@ -80,10 +78,14 @@ function* watchEditTodoSaga() {
   yield takeLatest(ACTION_TYPE.EDIT_TODO.REQUEST, editTodoSaga);
 }
 function* watchDeleteTodoSaga() {
+  debugger;
   yield takeLatest(ACTION_TYPE.REMOVE_TODO.REQUEST, deleteTodoSaga);
 }
 function* watchChangeTodoStatusSaga() {
-  yield takeLatest(ACTION_TYPE.CHANGE_TODO_STATUS.REQUEST, deleteTodoSaga);
+  yield takeLatest(
+    ACTION_TYPE.CHANGE_TODO_STATUS.REQUEST,
+    changeTodoStatusSaga
+  );
 }
 function* watchDeleteCompletedTodoSaga() {
   yield takeLatest(

@@ -49,6 +49,12 @@ export const removeCompletedTodo = () => {
     type: ACTION_TYPE.REMOVE_TODO_COMPLETED.SUCCESS,
   };
 };
+export const changeTodoStatusAction = (todo) => {
+  return {
+    type: ACTION_TYPE.CHANGE_TODO_STATUS.REQUEST,
+    payload: todo,
+  };
+};
 
 export const changeTodoStatus = (todo) => {
   return {
