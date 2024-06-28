@@ -7,6 +7,7 @@ import {
   addTodo,
   addTodoAction,
   editTodo,
+  editTodoAction,
   getEditId,
 } from "../store/todoListActions";
 import axios from "axios";
@@ -29,7 +30,7 @@ const Input = (props) => {
   const handleSubmit = (e) => {
     e.preventDefault();
     if (editId) {
-      todoDispatch({ type: ACTION_TYPE.EDIT_TODO.REQUEST });
+      todoDispatch(editTodoAction(value));
       todoDispatch(getEditId({ id: null }));
       // todoAPI
       // .put(endpoint + "/" + editId, { name: value })

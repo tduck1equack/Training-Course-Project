@@ -16,6 +16,7 @@ import {
   loadTodoAPI,
   changeTodoStatusAPI,
 } from "../../api/axiosIndex";
+import store from "../store";
 
 function* loadTodoSaga() {
   debugger;
@@ -27,27 +28,27 @@ function* loadTodoSaga() {
     console.log("Dumbass! That's a bad middleware");
   }
 }
-function* addTodoSaga(todo) {
+function* addTodoSaga(action) {
   try {
-    yield put(addTodo(todo));
-    yield call(addTodoAPI, todo);
+    yield put(addTodo(action.payload));
+    yield call(addTodoAPI, action.payload);
   } catch (e) {
     console.log(e);
   }
 }
-function* editTodoSaga(id, todo) {
+function* editTodoSaga(action) {
   try {
-    yield put(getEditId(id));
-    yield put(editTodo(todo));
-    yield call(editTodoAPI, [id, todo]);
+    const id = store.getState().editId;
+    yield put(editTodo(action.payload));
+    yield call(editTodoAPI, [id, action.payload]);
   } catch (e) {
     console.log(e);
   }
 }
-function* deleteTodoSaga(todo) {
+function* deleteTodoSaga(action) {
   try {
-    yield put(removeTodo(todo));
-    yield call(deleteTodoAPI, todo.id);
+    yield put(removeTodo(action.payload));
+    yield call(deleteTodoAPI, action.payload.id);
   } catch (e) {
     console.log(e);
   }

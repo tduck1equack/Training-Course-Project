@@ -19,14 +19,24 @@ export const addTodo = (name) => {
     payload: name,
   };
 };
-
+export const editTodoAction = (name) => {
+  return {
+    type: ACTION_TYPE.EDIT_TODO.REQUEST,
+    payload: name,
+  };
+};
 export const editTodo = (name) => {
   return {
     type: ACTION_TYPE.EDIT_TODO.SUCCESS,
     payload: name,
   };
 };
-
+export const removeTodoAction = (todo) => {
+  return {
+    type: ACTION_TYPE.REMOVE_TODO.REQUEST,
+    payload: todo,
+  };
+};
 export const removeTodo = (todo) => {
   return {
     type: ACTION_TYPE.REMOVE_TODO.SUCCESS,
