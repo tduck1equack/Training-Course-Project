@@ -76,7 +76,6 @@ const Main = () => {
 
   useEffect(() => {
     document.title = `${count} todos left!`;
-
     todoDispatch({ type: ACTION_TYPE.LOAD_TODO.REQUEST });
 
     /* todoAPI
@@ -88,7 +87,7 @@ const Main = () => {
     return () => {
       console.log("Destructing Main component");
     };
-  }, [todoDispatch, count]);
+  }, []);
   return (
     <div
       className={`input-wrapper ${theme === THEME.LIGHT ? "" : "dark-wrapper"}`}

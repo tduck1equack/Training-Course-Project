@@ -1,9 +1,11 @@
 import { call, put, takeEvery, takeLatest, all } from "redux-saga/effects";
 import {
   addTodo,
+  changeTodoStatus,
   editTodo,
   getEditId,
   loadTodo,
+  removeCompletedTodo,
   removeTodo,
 } from "../todoListActions";
 import { ACTION_TYPE } from "../todoReducer";
@@ -12,6 +14,7 @@ import {
   deleteTodoAPI,
   editTodoAPI,
   loadTodoAPI,
+  changeTodoStatusAPI,
 } from "../../api/axiosIndex";
 
 function* loadTodoSaga() {
@@ -49,18 +52,43 @@ function* deleteTodoSaga(todo) {
     console.log(e);
   }
 }
+function* changeTodoStatusSaga(todo) {
+  try {
+    yield put(changeTodoStatus(todo));
+    yield call(changeTodoStatusAPI, todo.id);
+  } catch (e) {
+    console.log(e);
+  }
+}
+function* deleteCompletedTodoSaga() {
+  try {
+    yield put(removeCompletedTodo());
+    yield call();
+  } catch (e) {
+    console.log(e);
+  }
+}
 function* watchLoadTodoSaga() {
   debugger;
   yield takeLatest(ACTION_TYPE.LOAD_TODO.REQUEST, loadTodoSaga);
 }
 function* watchAddTodoSaga() {
-  yield takeLatest(ACTION_TYPE.ADD_TODO, addTodoSaga);
+  yield takeLatest(ACTION_TYPE.ADD_TODO.REQUEST, addTodoSaga);
 }
 function* watchEditTodoSaga() {
-  yield takeLatest(ACTION_TYPE.EDIT_TODO, editTodoSaga);
+  yield takeLatest(ACTION_TYPE.EDIT_TODO.REQUEST, editTodoSaga);
 }
 function* watchDeleteTodoSaga() {
-  yield takeLatest(ACTION_TYPE.REMOVE_TODO, deleteTodoSaga);
+  yield takeLatest(ACTION_TYPE.REMOVE_TODO.REQUEST, deleteTodoSaga);
+}
+function* watchChangeTodoStatusSaga() {
+  yield takeLatest(ACTION_TYPE.CHANGE_TODO_STATUS.REQUEST, deleteTodoSaga);
+}
+function* watchDeleteCompletedTodoSaga() {
+  yield takeLatest(
+    ACTION_TYPE.REMOVE_TODO_COMPLETED.REQUEST,
+    deleteCompletedTodoSaga
+  );
 }
 /* export function* todoSaga() {
   yield takeEvery(ACTION_TYPE.LOAD_TODO, loadTodoSaga);
@@ -75,5 +103,6 @@ export function* rootSaga() {
     watchAddTodoSaga(),
     watchEditTodoSaga(),
     watchDeleteTodoSaga(),
+    watchChangeTodoStatusSaga(),
   ]);
 }

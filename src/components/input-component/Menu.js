@@ -5,6 +5,7 @@ import { FILTER } from "../Main";
 import { THEME, ThemeContext } from "../style/theme";
 import { useDispatch } from "react-redux";
 import { removeCompletedTodo } from "../store/todoListActions";
+import { ACTION_TYPE } from "../store/todoReducer";
 
 const Menu = (props) => {
   const { theme } = useContext(ThemeContext);
@@ -27,7 +28,9 @@ const Menu = (props) => {
           />
         </div>
         <Button
-          onClick={() => todoDispatch(removeCompletedTodo())}
+          onClick={() =>
+            todoDispatch({ type: ACTION_TYPE.REMOVE_TODO_COMPLETED.REQUEST })
+          }
           name="Clear Completed"
           special="secondary"
         />

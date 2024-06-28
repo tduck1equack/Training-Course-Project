@@ -7,43 +7,49 @@ export const loadTodo = (data) => {
   };
 };
 
+export const addTodoAction = (name) => {
+  return {
+    type: ACTION_TYPE.ADD_TODO.REQUEST,
+    payload: name,
+  };
+};
 export const addTodo = (name) => {
   return {
-    type: ACTION_TYPE.ADD_TODO,
+    type: ACTION_TYPE.ADD_TODO.SUCCESS,
     payload: name,
   };
 };
 
 export const editTodo = (name) => {
   return {
-    type: ACTION_TYPE.EDIT_TODO,
+    type: ACTION_TYPE.EDIT_TODO.SUCCESS,
     payload: name,
   };
 };
 
 export const removeTodo = (todo) => {
   return {
-    type: ACTION_TYPE.REMOVE_TODO,
+    type: ACTION_TYPE.REMOVE_TODO.SUCCESS,
     payload: todo,
   };
 };
 
 export const removeCompletedTodo = () => {
   return {
-    type: ACTION_TYPE.REMOVE_TODO_COMPLETED,
+    type: ACTION_TYPE.REMOVE_TODO_COMPLETED.SUCCESS,
   };
 };
 
 export const changeTodoStatus = (todo) => {
   return {
-    type: ACTION_TYPE.CHANGE_TODO_STATUS,
+    type: ACTION_TYPE.CHANGE_TODO_STATUS.SUCCESS,
     payload: todo,
   };
 };
 
 export const toggleStatusAll = (event) => {
   return {
-    type: ACTION_TYPE.TOGGLE_STATUS_ALL,
+    type: ACTION_TYPE.TOGGLE_STATUS_ALL.SUCCESS,
     payload: event,
   };
 };

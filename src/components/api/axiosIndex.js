@@ -27,4 +27,18 @@ const deleteTodoAPI = async (id) => {
   const response = await todoAPI.delete(`todoList/${id}`);
   return response;
 };
-export { todoAPI, loadTodoAPI, addTodoAPI, editTodoAPI, deleteTodoAPI };
+const deleteCompletedTodoAPI = async () => {};
+const changeTodoStatusAPI = async (item) => {
+  const response = await todoAPI.put(`todoList/${item.id}`, {
+    status: item.status,
+  });
+  return response;
+};
+export {
+  todoAPI,
+  loadTodoAPI,
+  addTodoAPI,
+  editTodoAPI,
+  deleteTodoAPI,
+  changeTodoStatusAPI,
+};

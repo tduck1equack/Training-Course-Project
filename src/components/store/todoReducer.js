@@ -3,12 +3,30 @@ const ACTION_TYPE = {
     REQUEST: "todoList/loadTodoRequest",
     SUCCESS: "todoList/loadTodo",
   },
-  ADD_TODO: "todoList/addTodo",
-  EDIT_TODO: "todoList/editTodo",
-  REMOVE_TODO: "todoList/removeTodo",
-  REMOVE_TODO_COMPLETED: "todoList/removeTodoCompleted",
-  CHANGE_TODO_STATUS: "todoList/changeStatus",
-  TOGGLE_STATUS_ALL: "todoList/toggleStatusAll",
+  ADD_TODO: {
+    REQUEST: "todoList/addTodoRequest",
+    SUCCESS: "todoList/addTodo",
+  },
+  EDIT_TODO: {
+    REQUEST: "todoList/editTodoRequest",
+    SUCCESS: "todoList/editTodo",
+  },
+  REMOVE_TODO: {
+    REQUEST: "todoList/removeTodoRequest",
+    SUCCESS: "todoList/removeTodo",
+  },
+  REMOVE_TODO_COMPLETED: {
+    REQUEST: "todoList/removeTodoCompletedRequest",
+    SUCCESS: "todoList/removeTodoCompleted",
+  },
+  CHANGE_TODO_STATUS: {
+    REQUEST: "todoList/changeStatusRequest",
+    SUCCESS: "todoList/changeStatus",
+  },
+  TOGGLE_STATUS_ALL: {
+    REQUEST: "todoList/toggleStatusAllRequest",
+    SUCCESS: "todoList/toggleStatusAll",
+  },
   GET_EDIT_ID: "todoList/getEditId",
 };
 
@@ -22,7 +40,8 @@ const todoReducer = (state, action) => {
         ...state,
         todoList: [...todoList, ...payload],
       };
-    case ACTION_TYPE.ADD_TODO:
+    case ACTION_TYPE.ADD_TODO.SUCCESS:
+      console.log("adf");
       return {
         ...state,
         todoList: [
@@ -30,31 +49,31 @@ const todoReducer = (state, action) => {
           { id: todoList.length + 1, name: payload, status: false },
         ],
       };
-    case ACTION_TYPE.EDIT_TODO:
+    case ACTION_TYPE.EDIT_TODO.SUCCESS:
       return {
         ...state,
         todoList: todoList.map((i) =>
           i.id === editId ? { ...i, name: payload } : i
         ),
       };
-    case ACTION_TYPE.REMOVE_TODO:
+    case ACTION_TYPE.REMOVE_TODO.SUCCESS:
       return {
         ...state,
         todoList: todoList.filter((i) => i.id !== payload.id),
       };
-    case ACTION_TYPE.REMOVE_TODO_COMPLETED:
+    case ACTION_TYPE.REMOVE_TODO_COMPLETED.SUCCESS:
       return {
         ...state,
         todoList: todoList.filter((i) => !i.status),
       };
-    case ACTION_TYPE.CHANGE_TODO_STATUS:
+    case ACTION_TYPE.CHANGE_TODO_STATUS.SUCCESS:
       return {
         ...state,
         todoList: todoList.map((i) =>
           i.id === payload.id ? { ...i, status: !i.status } : i
         ),
       };
-    case ACTION_TYPE.TOGGLE_STATUS_ALL:
+    case ACTION_TYPE.TOGGLE_STATUS_ALL.SUCCESS:
       return {
         ...state,
         todoList: todoList.map((i) => {
