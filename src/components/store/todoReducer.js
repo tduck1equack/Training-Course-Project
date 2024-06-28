@@ -56,7 +56,6 @@ const todoReducer = (state, action) => {
         ),
       };
     case ACTION_TYPE.REMOVE_TODO.SUCCESS:
-      debugger;
       return {
         ...state,
         todoList: todoList.filter((i) => i.id !== payload.id),

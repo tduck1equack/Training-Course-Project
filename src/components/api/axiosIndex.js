@@ -28,13 +28,12 @@ const editTodoAPI = async (id, todo) => {
 };
 const deleteTodoAPI = async (id) => {
   const response = await todoAPI.delete(`todoList/${id}`);
-  debugger;
   return response;
 };
 const deleteCompletedTodoAPI = async () => {};
 const changeTodoStatusAPI = async (item) => {
   const response = await todoAPI.put(`todoList/${item.id}`, {
-    status: item.status,
+    status: !item.status,
   });
   debugger;
   return response;

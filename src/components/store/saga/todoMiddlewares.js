@@ -45,7 +45,6 @@ function* editTodoSaga(action) {
 }
 function* deleteTodoSaga(action) {
   try {
-    debugger;
     yield put(removeTodo(action.payload));
     yield call(deleteTodoAPI, action.payload.id);
   } catch (e) {
